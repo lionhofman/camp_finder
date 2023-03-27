@@ -1,3 +1,4 @@
+import 'package:camp_finder/app/ui/global_widgets/app_bar_header.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -6,9 +7,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(''),
-      ),
+      appBar: const AppBarHeader(),
       body: Container(),
     );
   }
