@@ -1,5 +1,6 @@
 class AppRoutes {
   //Home
+  static const String BOTTOM_NAVIGATION = '/';
   static const String HOME = '/home';
   static const String PRODUCTS = '/products';
   static const String PRODUCT_DETAILS = '/product-details';

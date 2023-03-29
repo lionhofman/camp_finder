@@ -14,7 +14,7 @@ class AppWidget extends StatelessWidget {
     return GetMaterialApp(
       // The two lines bellow are for the responsive
       title: "Flutter's Clothings",
-      initialRoute: AppRoutes.HOME,
+      initialRoute: AppRoutes.BOTTOM_NAVIGATION,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primarySwatch: Colors.blue,

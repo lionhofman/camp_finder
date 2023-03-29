@@ -1,14 +1,32 @@
 import 'package:camp_finder/app/ui/global_widgets/app_bar_header.dart';
+import 'package:camp_finder/app/ui/modules/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends GetView<HomeController> {
+  final pageController = PageController();
+  HomePage({Key? key}) : super(key: key);
+
+  Widget _buildHome() {
+    return Scaffold(
+      appBar: const AppBarHeader(),
+      body: Container(
+        height: 500,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const AppBarHeader(),
-      body: Container(),
+    return PageView(
+      controller: pageController,
+      physics: const NeverScrollableScrollPhysics(),
+      children: [
+        _buildHome(),
+        Container(
+          color: Colors.red,
+        ),
+      ],
     );
   }
 }
