@@ -1,4 +1,5 @@
 import 'package:camp_finder/app/ui/global_widgets/app_bar_header.dart';
+import 'package:camp_finder/app/ui/global_widgets/drawer/custom_drawer.dart';
 import 'package:camp_finder/app/ui/modules/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,10 +9,15 @@ class HomePage extends GetView<HomeController> {
   HomePage({Key? key}) : super(key: key);
 
   Widget _buildHome() {
-    return Scaffold(
-      appBar: const AppBarHeader(),
-      body: Container(
-        height: 500,
+    return SafeArea(
+      child: Scaffold(
+        appBar: const AppBarHeader(),
+        drawer: CustomDrawer(
+          pageController: pageController,
+        ),
+        body: const Center(
+          child: Text('My Page!'),
+        ),
       ),
     );
   }

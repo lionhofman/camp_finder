@@ -12,22 +12,37 @@ class AppBarHeader extends StatelessWidget implements PreferredSizeWidget {
         super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        toolbarHeight: kToolbarHeight,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            showLogoPNG(),
-            //showDescription("Camp Finder"),
-            searchBar(),
-          ],
-        ),
-        centerTitle: true,
+    return AppBar(
+      backgroundColor: Colors.green,
+      toolbarHeight: kToolbarHeight,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          showLogoPNG(),
+          //showDescription("Camp Finder"),
+          // searchBar(),
+        ],
       ),
-      body: Container(),
+      centerTitle: true,
+      actions: [
+        Stack(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.person_3_outlined),
+              onPressed: () {
+                /** TODO go to Login Page */
+              },
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  static Widget loginIcon() {
+    return const Icon(
+      Icons.login,
     );
   }
 

@@ -16,7 +16,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.BOTTOM_NAVIGATION,
-      page: () => const RootPage(),
+      page: () => RootPage(),
       binding: RootBinding(),
     ),
     /* GetPage(
