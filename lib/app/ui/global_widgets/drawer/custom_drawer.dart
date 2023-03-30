@@ -1,5 +1,7 @@
+import 'package:camp_finder/app/core/constants/page_constants.dart';
 import 'package:camp_finder/app/ui/global_widgets/drawer/drawer_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class CustomDrawer extends StatelessWidget {
   final PageController pageController;
@@ -71,28 +73,46 @@ class CustomDrawer extends StatelessWidget {
               ),
               const Divider(),
               DrawerTile(
-                icon: Icons.home,
-                text: "Ínicio",
+                icon: Icons.location_on,
+                text: "Finder",
                 controller: pageController,
-                page: 0,
+                page: PageConstants.MENU_INDEX_FINDER,
               ),
               DrawerTile(
                 icon: Icons.search,
                 text: "Busca",
                 controller: pageController,
-                page: 1,
-              ),
-              DrawerTile(
-                icon: Icons.location_on,
-                text: "Campings",
-                controller: pageController,
-                page: 2,
+                page: PageConstants.MENU_INDEX_SEARCH,
               ),
               DrawerTile(
                 icon: Icons.playlist_add_check,
                 text: "Itens Básicos",
                 controller: pageController,
-                page: 3,
+                page: PageConstants.MENU_INDEX_BASIC_ITEMS,
+              ),
+              DrawerTile(
+                icon: MdiIcons.tent,
+                text: "Campings",
+                controller: pageController,
+                page: PageConstants.MENU_INDEX_CAMPING,
+              ),
+              DrawerTile(
+                icon: MdiIcons.hiking,
+                text: "Trekking",
+                controller: pageController,
+                page: PageConstants.MENU_INDEX_TREKKING,
+              ),
+              DrawerTile(
+                icon: MdiIcons.busDoubleDecker,
+                text: "Motorhome",
+                controller: pageController,
+                page: PageConstants.MENU_INDEX_MOTORHOME,
+              ),
+              DrawerTile(
+                icon: MdiIcons.carLiftedPickup,
+                text: "4x4",
+                controller: pageController,
+                page: PageConstants.MENU_INDEX_4X4,
               ),
             ],
           )
