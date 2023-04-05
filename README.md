@@ -13,7 +13,7 @@ This is a camping app that is currently under development and is being created t
 How to Contribute
 We welcome contributions to this project. If you are interested in contributing, please fork this repository and create a new branch for your changes. Once you have made your changes, please submit a pull request and we will review your changes.
 
-### Future Development
+### Ideas of future Development
 We have several features planned for future development, including:
 
 - Weather alerts and updates
