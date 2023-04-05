@@ -50,7 +50,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBKdL2kyHCuAHBIA4h7wBNMsrlI3_x9TVk',
+    apiKey: '[Your Key]',
     appId: '1:276144573779:android:fac80c468b862529e325a6',
     messagingSenderId: '276144573779',
     projectId: 'campfinder-e6a9f',
@@ -58,12 +58,13 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB-ziQnFNZ5JOX8nrz7Va851hbJWqXyZv8',
+    apiKey: '[Your Key]',
     appId: '1:276144573779:ios:535fe334beb46b74e325a6',
     messagingSenderId: '276144573779',
     projectId: 'campfinder-e6a9f',
     storageBucket: 'campfinder-e6a9f.appspot.com',
-    iosClientId: '276144573779-9nj6vi7a46savm4p77ipc93iiklh0hjo.apps.googleusercontent.com',
+    iosClientId:
+        '276144573779-9nj6vi7a46savm4p77ipc93iiklh0hjo.apps.googleusercontent.com',
     iosBundleId: 'br.com.hofman.lion.campFinder',
   );
 }
