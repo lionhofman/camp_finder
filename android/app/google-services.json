@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "276144573779",
+    "project_id": "campfinder-e6a9f",
+    "storage_bucket": "campfinder-e6a9f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:276144573779:android:fac80c468b862529e325a6",
+        "android_client_info": {
+          "package_name": "br.com.hofman.lion.camp_finder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "276144573779-ar7v9jprrtugss3hgpestniggg6gp6bq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKdL2kyHCuAHBIA4h7wBNMsrlI3_x9TVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "276144573779-ar7v9jprrtugss3hgpestniggg6gp6bq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "276144573779-hcck1ng6bro21pk6ktop5lkvedi0v9f7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "campFinderIOS"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
