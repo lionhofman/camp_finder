@@ -38,7 +38,7 @@ class CustomDrawer extends StatelessWidget {
                         top: 8,
                         left: 0,
                         child: Text(
-                          "Camp Finder",
+                          "App Camping",
                           style: TextStyle(
                               fontSize: 34, fontWeight: FontWeight.bold),
                         )),

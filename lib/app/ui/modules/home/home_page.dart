@@ -1,5 +1,6 @@
 import 'package:camp_finder/app/ui/global_widgets/app_bar_header.dart';
 import 'package:camp_finder/app/ui/global_widgets/drawer/custom_drawer.dart';
+import 'package:camp_finder/app/ui/modules/camping/camping_page.dart';
 import 'package:camp_finder/app/ui/modules/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,9 +30,7 @@ class HomePage extends GetView<HomeController> {
       physics: const NeverScrollableScrollPhysics(),
       children: [
         _buildHome(),
-        Container(
-          color: Colors.red,
-        ),
+        CampingPage(),
       ],
     );
   }

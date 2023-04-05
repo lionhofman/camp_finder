@@ -1,5 +1,7 @@
 import 'package:camp_finder/app/ui/global_widgets/bottom_navigation/root_binding.dart';
 import 'package:camp_finder/app/ui/global_widgets/bottom_navigation/root_page.dart';
+import 'package:camp_finder/app/ui/modules/camping/camping_binding.dart';
+import 'package:camp_finder/app/ui/modules/camping/camping_page.dart';
 import 'package:camp_finder/app/ui/modules/home/home_binding.dart';
 import 'package:camp_finder/app/ui/modules/home/home_page.dart';
 import 'package:get/get.dart';
@@ -19,11 +21,10 @@ class AppPages {
       page: () => RootPage(),
       binding: RootBinding(),
     ),
-    /* GetPage(
-      name: AppRoutes.PRODUCTS,
-      page: () => const ProductsPage(),
-      binding: ProductsBinding(),
-      transition: Transition.cupertino,
-    ),*/
+    GetPage(
+      name: AppRoutes.CAMPING_FINDER_PAGE,
+      page: () => CampingPage(),
+      binding: CampingBinding(),
+    ),
   ];
 }

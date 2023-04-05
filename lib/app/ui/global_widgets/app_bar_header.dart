@@ -19,9 +19,7 @@ class AppBarHeader extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          showLogoPNG(),
-          //showDescription("Camp Finder"),
-          // searchBar(),
+          showDescription("App Camping"),
         ],
       ),
       centerTitle: true,
