@@ -45,15 +45,13 @@ class AppBarHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   static Widget showDescription(String? title) {
-    return Flexible(
-      child: Text(
-        title ?? '',
-        style: const TextStyle(
-            color: Colors.white,
-            fontWeight: Fonts.OPEN_SANS_REGULAR_WEIGHT,
-            fontFamily: Fonts.OPEN_SANS_FONT_FAMILY,
-            fontSize: 14),
-      ),
+    return Text(
+      title ?? '',
+      style: const TextStyle(
+          color: Colors.white,
+          fontWeight: Fonts.OPEN_SANS_REGULAR_WEIGHT,
+          fontFamily: Fonts.OPEN_SANS_FONT_FAMILY,
+          fontSize: 14),
     );
   }
 

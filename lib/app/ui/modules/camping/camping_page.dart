@@ -48,15 +48,13 @@ class CampingPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Flexible(
-          child: Text(
-            'App Camping',
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: Fonts.OPEN_SANS_REGULAR_WEIGHT,
-                fontFamily: Fonts.OPEN_SANS_FONT_FAMILY,
-                fontSize: 14),
-          ),
+        title: const Text(
+          'App Camping',
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: Fonts.OPEN_SANS_REGULAR_WEIGHT,
+              fontFamily: Fonts.OPEN_SANS_FONT_FAMILY,
+              fontSize: 14),
         ),
         backgroundColor: Colors.green,
         toolbarHeight: kToolbarHeight,
