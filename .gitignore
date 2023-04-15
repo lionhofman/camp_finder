@@ -43,6 +43,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .env
+/lib/env/mapFiles
 /lib/env/env.g.dart
 **/android/app/google-services.json
 **/android/app/src/main/res/values/strings.xml

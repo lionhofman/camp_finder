@@ -4,4 +4,5 @@ class AppRoutes {
   static const String HOME = '/home';
   static const String SEARCH_PAGE = '/search-page';
   static const String CAMPING_FINDER_PAGE = '/camping-page';
+  static const String LOGIN_PAGE = '/login-page';
 }

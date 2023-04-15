@@ -29,7 +29,7 @@ class AppBarHeader extends StatelessWidget implements PreferredSizeWidget {
             IconButton(
               icon: const Icon(Icons.person_3_outlined),
               onPressed: () {
-                /** TODO go to Login Page */
+                Get.toNamed(AppRoutes.LOGIN_PAGE);
               },
             ),
           ],
@@ -39,8 +39,11 @@ class AppBarHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   static Widget loginIcon() {
-    return const Icon(
-      Icons.login,
+    return InkWell(
+      child: const Icon(
+        Icons.login,
+      ),
+      onTap: () {},
     );
   }
 
