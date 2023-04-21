@@ -1,17 +1,50 @@
-import 'package:camp_finder/app/ui/modules/login/widgets/login_input_text.dart';
+import 'package:camp_finder/app/ui/app_routes.dart';
+import 'package:camp_finder/app/ui/modules/input/widgets/custom_input_button.dart';
+import 'package:camp_finder/app/ui/modules/input/widgets/custom_input_text.dart';
+import 'package:camp_finder/app/ui/modules/login/contoller/login_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import 'widgets/login_button.dart';
 import 'widgets/login_square_tile.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends GetView<LoginController> {
   LoginPage({Key? key}) : super(key: key);
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
   // sign user in method
-  void signUserIn() {}
+  void signUserIn() async {
+    // show loading circle
+    showDialog(
+      context: Get.context!,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    // try sign in
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: usernameController.text,
+        password: passwordController.text,
+      );
+      // pop the loading circle
+      Navigator.pop(Get.context!);
+
+      Get.toNamed(AppRoutes.HOME);
+    } on FirebaseAuthException catch (e) {
+      // pop the loading circle
+      Navigator.pop(Get.context!);
+
+      showErrorMessage(
+        errorMessage: e.code,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,41 +55,67 @@ class LoginPage extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                padlockImg(),
-                // welcome back, you've been missed!
-                loginTitle(),
-                // username textfield
-                inputTextWidget(
-                  controller: usernameController,
-                  hint: 'Login',
-                  isObscure: false,
-                ),
-                // password textfield
-                inputTextWidget(
-                  controller: usernameController,
-                  hint: 'Senha',
-                  isObscure: true,
-                ),
+            child: Obx(
+              () => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  padlockImg(),
+                  // welcome back, you've been missed!
+                  loginTitle(),
+                  // username textfield
 
-                // forgot password?
-                forgotPass(),
-                // sign in button
-                LoginButton(
-                  onTap: signUserIn,
-                ),
-                // or continue with
-                orContinueWith(),
-                const SizedBox(height: 30),
-                // google sign in button
-                googleSignInIcon(),
-                const SizedBox(height: 50),
-                // not a member? register now
-                signInLink(),
-                const SizedBox(height: 60),
-              ],
+                  CustomInputText(
+                    controller:
+                        controller.customInputController.emailTextController,
+                    hintText: 'Login',
+                    isObscure: false,
+                    isValid: controller.customInputController.emailIsValid,
+                    errorText: controller.customInputController.emailErrorText,
+                    onChange: controller.customInputController.setEmail,
+                    clearField: controller.customInputController.clearEmail,
+                    fieldText: controller.customInputController.email,
+                  ),
+                  // password textfield
+                  CustomInputText(
+                    controller:
+                        controller.customInputController.passTextController,
+                    hintText: 'Senha',
+                    isObscure: true,
+                    isValid: controller.customInputController.passIsValid,
+                    errorText: controller.customInputController.passErrorText,
+                    onChange: controller.customInputController.setPassword,
+                    clearField: controller.customInputController.clearPass,
+                    fieldText: controller.customInputController.pass,
+                    setShowPass: controller.customInputController.setShowPass,
+                    showPass: controller.customInputController.showPass,
+                  ),
+
+                  // forgot password?
+                  forgotPass(),
+                  // sign in button
+                  CustomInputButton(
+                    onTap: () {
+                      if (controller.customInputController.allLoginCheck()) {
+                        controller.loginEmail(
+                            loginCustomer: controller
+                                .customInputController.emailTextController.text,
+                            password: controller
+                                .customInputController.passTextController.text);
+                      }
+                    },
+                    labelButton: "Entrar",
+                  ),
+                  // or continue with
+                  orContinueWith(),
+                  const SizedBox(height: 30),
+                  // google sign in button
+                  googleSignInIcon(),
+                  const SizedBox(height: 50),
+                  // not a member? register now
+                  signInLink(),
+                  const SizedBox(height: 60),
+                ],
+              ),
             ),
           ),
         ),
@@ -83,17 +142,6 @@ class LoginPage extends StatelessWidget {
         Icons.lock,
         size: 100,
       ),
-    );
-  }
-
-  Widget inputTextWidget(
-      {required TextEditingController controller,
-      required String hint,
-      required bool isObscure}) {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: LoginInputText(
-          controller: controller, hintText: hint, obscureText: isObscure),
     );
   }
 
@@ -154,14 +202,39 @@ class LoginPage extends StatelessWidget {
           style: TextStyle(color: Colors.grey[700]),
         ),
         const SizedBox(width: 4),
-        const Text(
-          'Se cadastre agora',
-          style: TextStyle(
-            color: Colors.blue,
-            fontWeight: FontWeight.bold,
+        InkWell(
+          child: const Text(
+            'Se cadastre agora',
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          onTap: () {
+            Get.toNamed(AppRoutes.REGISTER_PAGE);
+          },
         ),
       ],
     );
+  }
+
+  void showErrorMessage({
+    required String errorMessage,
+  }) {
+    showDialog(
+        context: Get.context!,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Colors.deepPurple,
+            title: Center(
+              child: Text(
+                errorMessage,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          );
+        });
   }
 }
