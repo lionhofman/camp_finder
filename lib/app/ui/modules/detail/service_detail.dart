@@ -1,7 +1,6 @@
 import 'package:camp_finder/app/core/constants/colors.dart';
 import 'package:camp_finder/app/core/img_cache/img_cache_custom.dart';
-import 'package:camp_finder/app/ui/modules/home/model/model_services.dart';
-import 'package:camp_finder/app/ui/modules/new_home/templates/laundry/utils/LSImages.dart';
+import 'package:camp_finder/app/core/constants/images.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
