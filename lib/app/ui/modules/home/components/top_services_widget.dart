@@ -1,5 +1,4 @@
 import 'package:camp_finder/app/core/img_cache/img_cache_custom.dart';
-import 'package:camp_finder/app/ui/modules/detail/service_detail.dart';
 import 'package:camp_finder/app/ui/modules/home/model/model_services.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -30,7 +29,7 @@ class TopServicesWidget extends StatelessWidget {
             Text(data.title.validate(), style: primaryTextStyle()),
           ],
         ).onTap(() {
-          ServiceDetail().launch(context);
+          // ServiceDetail().launch(context);
         });
       },
     );

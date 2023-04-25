@@ -31,7 +31,7 @@ Widget? Function(BuildContext, String) placeholderWidgetFn() =>
     (_, s) => placeholderWidget();
 
 Widget placeholderWidget() =>
-    Image.asset('newlayout/images/placeholder.jpg', fit: BoxFit.cover);
+    Image.asset('assets/newlayout/images/placeholder.jpg', fit: BoxFit.cover);
 
 void changeStatusColor(Color color) async {
   setStatusBarColor(color);

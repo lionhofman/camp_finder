@@ -15,4 +15,15 @@ class CampingRepositoryImpl implements CampingRepository {
       return Left(e);
     }
   }
+
+  @override
+  Future<Either<Exception, List<Camping?>>> getLimitToLast(
+      {required int qty}) async {
+    try {
+      var campings = await _campingsRemoteDataSource.getLimitToLast(qty: qty);
+      return Right(campings);
+    } on Exception catch (e) {
+      return Left(e);
+    }
+  }
 }

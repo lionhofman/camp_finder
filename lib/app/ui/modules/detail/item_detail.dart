@@ -1,11 +1,13 @@
 import 'package:camp_finder/app/core/constants/colors.dart';
 import 'package:camp_finder/app/core/img_cache/img_cache_custom.dart';
-import 'package:camp_finder/app/core/constants/images.dart';
+import 'package:camp_finder/app/domain/entities/camping.dart';
+import 'package:camp_finder/app/ui/modules/detail/tabs/about_us.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class ServiceDetail extends StatelessWidget {
-  const ServiceDetail({Key? key}) : super(key: key);
+class ItemDetail extends StatelessWidget {
+  final Camping campDetails;
+  const ItemDetail({Key? key, required this.campDetails}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +27,13 @@ class ServiceDetail extends StatelessWidget {
                 ),
                 pinned: true,
                 elevation: 0.5,
-                expandedHeight: 400,
+                expandedHeight: 370,
                 flexibleSpace: FlexibleSpaceBar(
                   titlePadding:
-                      EdgeInsets.only(bottom: 66, left: 30, right: 50),
+                      const EdgeInsets.only(bottom: 85, left: 45, right: 50),
                   collapseMode: CollapseMode.parallax,
                   title: Text(
-                    'Rohan Patel',
+                    campDetails.title,
                     style: boldTextStyle(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -41,12 +43,12 @@ class ServiceDetail extends StatelessWidget {
                     children: [
                       Stack(
                         children: [
-                          commonCacheImageWidget(LSWall, 300,
+                          commonCacheImageWidget(campDetails.image, 300,
                               width: context.width(), fit: BoxFit.cover),
                           Container(
                             height: 300,
                             width: context.width(),
-                            color: black.withOpacity(0.6),
+                            color: black.withOpacity(0.4),
                           ),
                           Positioned(
                             bottom: 8,
@@ -57,12 +59,15 @@ class ServiceDetail extends StatelessWidget {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('XPress Laundry Service',
+                                    Text(campDetails.title,
                                         style: boldTextStyle(
                                             size: 20, color: white)),
                                     4.height,
-                                    Text(
-                                        '145 Valencia St, San Francisco, CA 94103',
+                                    Text(campDetails.nameCamping,
+                                        style:
+                                            secondaryTextStyle(color: white)),
+                                    4.height,
+                                    Text(campDetails.address,
                                         style:
                                             secondaryTextStyle(color: white)),
                                     4.height,
@@ -110,42 +115,6 @@ class ServiceDetail extends StatelessWidget {
                         ],
                       ),
                       16.height,
-                      Row(
-                        children: [
-                          Column(
-                            children: [
-                              Icon(LineIcons.globe,
-                                  size: 30, color: appColorPrimary),
-                              8.height,
-                              Text('Website', style: primaryTextStyle()),
-                            ],
-                          ).expand(),
-                          Column(
-                            children: [
-                              Icon(LineIcons.phone,
-                                  size: 30, color: appColorPrimary),
-                              8.height,
-                              Text('Call', style: primaryTextStyle()),
-                            ],
-                          ).expand(),
-                          Column(
-                            children: [
-                              Icon(LineIcons.directions,
-                                  size: 30, color: appColorPrimary),
-                              8.height,
-                              Text('Direction', style: primaryTextStyle()),
-                            ],
-                          ).expand(),
-                          Column(
-                            children: [
-                              Icon(LineIcons.share_square_1,
-                                  size: 30, color: appColorPrimary),
-                              8.height,
-                              Text('Share', style: primaryTextStyle()),
-                            ],
-                          ).expand(),
-                        ],
-                      )
                     ],
                   ),
                 ),
@@ -155,31 +124,51 @@ class ServiceDetail extends StatelessWidget {
                   isScrollable: false,
                   tabs: [
                     Tab(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text('About'.toUpperCase(),
-                            style: primaryTextStyle(size: 13)),
+                      height: 65,
+                      child: Column(
+                        children: [
+                          const Icon(Icons.my_location,
+                              size: 30, color: appColorPrimary),
+                          10.height,
+                          Text('Sobre'.toUpperCase(),
+                              style: primaryTextStyle(size: 13)),
+                        ],
                       ),
                     ),
                     Tab(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text('Services'.toUpperCase(),
-                            style: primaryTextStyle(size: 13)),
+                      height: 65,
+                      child: Column(
+                        children: [
+                          const Icon(Icons.room_service,
+                              size: 30, color: appColorPrimary),
+                          10.height,
+                          Text('Serviços'.toUpperCase(),
+                              style: primaryTextStyle(size: 13)),
+                        ],
                       ),
                     ),
                     Tab(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text('Offers'.toUpperCase(),
-                            style: primaryTextStyle(size: 13)),
+                      height: 65,
+                      child: Column(
+                        children: [
+                          const Icon(Icons.monetization_on,
+                              size: 30, color: appColorPrimary),
+                          10.height,
+                          Text('taxas'.toUpperCase(),
+                              style: primaryTextStyle(size: 13)),
+                        ],
                       ),
                     ),
                     Tab(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text('PriceList'.toUpperCase(),
-                            style: primaryTextStyle(size: 13)),
+                      height: 65,
+                      child: Column(
+                        children: [
+                          const Icon(Icons.info,
+                              size: 30, color: appColorPrimary),
+                          10.height,
+                          Text('Mais info'.toUpperCase(),
+                              style: primaryTextStyle(size: 13)),
+                        ],
                       ),
                     ),
                   ],
@@ -189,17 +178,17 @@ class ServiceDetail extends StatelessWidget {
           },
           body: TabBarView(
             children: [
-              // LSAboutComponent(),
-              // PurchaseMoreScreen(),
-              // PurchaseMoreScreen(),
-              // PurchaseMoreScreen()
+              AboutUs(campDetails: campDetails),
+              AboutUs(campDetails: campDetails),
+              AboutUs(campDetails: campDetails),
+              AboutUs(campDetails: campDetails),
             ],
           ),
         ),
       ),
       bottomNavigationBar: Container(
         decoration: boxDecorationWithShadow(backgroundColor: context.cardColor),
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: AppButton(
           text: 'Schedule a pickup'.toUpperCase(),
           textColor: white,
