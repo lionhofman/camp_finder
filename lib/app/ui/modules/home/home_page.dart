@@ -14,47 +14,47 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return <Widget>[AppBarHeader(innerBoxIsScrolled: innerBoxIsScrolled)];
-      },
-      body: Container(
-        color: appColorSecondary.withOpacity(0.55),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              8.height,
-              Text('Top Services', style: boldTextStyle(size: 18))
-                  .paddingOnly(left: 16, top: 16, right: 16, bottom: 8),
-              const TopServicesWidget(),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Popular Laundry Nearby', style: boldTextStyle(size: 18))
-                      .expand(),
-                  TextButton(
-                      onPressed: () {
-                        // LSNearByScreen().launch(context);
-                      },
-                      child: Text('View All', style: secondaryTextStyle()))
-                ],
-              ).paddingOnly(left: 16, top: 16, right: 16),
-              ShowcaseHighlightsWidget(),
-              Row(
-                children: [
-                  Text('Special Package & Offers',
-                          style: boldTextStyle(size: 18))
-                      .expand(),
-                  TextButton(
-                      onPressed: () {
-                        // LSOfferAllScreen().launch(context);
-                      },
-                      child: Text('View All', style: secondaryTextStyle()))
-                ],
-              ).paddingOnly(left: 16, right: 16),
-              const OfferServiceWidget(),
-            ],
+    return Scaffold(
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[AppBarHeader(innerBoxIsScrolled: innerBoxIsScrolled)];
+        },
+        body: Container(
+          color: appColorSecondary.withOpacity(0.55),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                8.height,
+                Text('Dicas', style: boldTextStyle(size: 18))
+                    .paddingOnly(left: 16, top: 16, right: 16, bottom: 8),
+                const TopServicesWidget(),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('Em destaque', style: boldTextStyle(size: 18))
+                        .expand(),
+                    TextButton(
+                        onPressed: () {
+                          // LSNearByScreen().launch(context);
+                        },
+                        child: Text('View All', style: secondaryTextStyle()))
+                  ],
+                ).paddingOnly(left: 16, top: 16, right: 16),
+                ShowcaseHighlightsWidget(),
+                Row(
+                  children: [
+                    Text('Dicas', style: boldTextStyle(size: 18)).expand(),
+                    TextButton(
+                        onPressed: () {
+                          // LSOfferAllScreen().launch(context);
+                        },
+                        child: Text('View All', style: secondaryTextStyle()))
+                  ],
+                ).paddingOnly(left: 16, right: 16),
+                const OfferServiceWidget(),
+              ],
+            ),
           ),
         ),
       ),

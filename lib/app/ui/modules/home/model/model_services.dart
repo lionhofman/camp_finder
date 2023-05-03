@@ -35,10 +35,10 @@ class ModelServices {
 List<ModelServices> getTopServiceList() {
   List<ModelServices> list = [];
 
-  list.add(ModelServices(title: 'Wash & Fold', img: LSWashingClothes));
-  list.add(ModelServices(title: 'Wash & Iren', img: LSSweatshirt));
-  list.add(ModelServices(title: 'Dry Clean', img: LSSuit));
-  list.add(ModelServices(title: 'premium Wash', img: LSWashingMachine));
+  list.add(ModelServices(title: 'Camping', img: LSWashingClothes));
+  list.add(ModelServices(title: 'Trekking', img: LSSweatshirt));
+  list.add(ModelServices(title: '4x4', img: LSSuit));
+  list.add(ModelServices(title: 'Motorhome', img: LSWashingMachine));
 
   return list;
 }
