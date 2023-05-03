@@ -4,16 +4,15 @@ import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class AppBarHeader extends StatelessWidget {
-  final bool innerBoxIsScrolled;
-  const AppBarHeader({Key? key, required this.innerBoxIsScrolled})
-      : super(key: key);
+  final bool? innerBoxIsScrolled;
+  const AppBarHeader({Key? key, this.innerBoxIsScrolled}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       expandedHeight: 230,
       floating: true,
-      forceElevated: innerBoxIsScrolled,
+      forceElevated: innerBoxIsScrolled ?? false,
       pinned: true,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
