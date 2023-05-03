@@ -31,6 +31,11 @@ class BottomBar extends GetView<RootController> {
                     label: "Home",
                   ),
                   BottomNavigationBarItem(
+                    icon: Icon(Icons.location_on_outlined),
+                    activeIcon: Icon(Icons.location_on),
+                    label: "Mais próximo",
+                  ),
+                  BottomNavigationBarItem(
                     icon: Icon(Icons.search_outlined),
                     activeIcon: Icon(Icons.search),
                     label: "Search",

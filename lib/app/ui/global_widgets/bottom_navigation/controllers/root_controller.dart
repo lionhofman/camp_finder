@@ -1,5 +1,8 @@
 import 'package:camp_finder/app/core/constants/page_constants.dart';
+import 'package:camp_finder/app/ui/app_routes.dart';
+import 'package:camp_finder/app/ui/modules/camping/camping_page.dart';
 import 'package:camp_finder/app/ui/modules/home/home_page.dart';
+import 'package:camp_finder/app/ui/modules/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,21 +16,24 @@ class RootController extends GetxController {
 
   RootController() {
     _pages = [
-      HomePage(),
+      const HomePage(),
+      CampingPage(),
+      LoginPage(),
     ];
   }
 
   void changePage(int index) {
+    Get.until((route) => Get.currentRoute == AppRoutes.BOTTOM_NAVIGATION);
     switch (index) {
       case PageConstants.BOTTOM_BAR_INDEX_HOME:
-        /* setup Home */
+        //TODO setup home
         break;
-      case PageConstants.BOTTOM_BAR_INDEX_SEARCH:
-        /* setup Search Page */
+      case PageConstants.BOTTOM_BAR_INDEX_FINDER:
+        //TODO setup finder page
         break;
 
       case PageConstants.BOTTOM_BAR_INDEX_LOGIN:
-        /* setup Search LoginPage */
+        //TODO setup login page
         break;
       default:
     }
