@@ -1,49 +1,55 @@
+import 'package:camp_finder/app/core/constants/page_constants.dart';
 import 'package:camp_finder/app/ui/global_widgets/bottom_navigation/controllers/root_controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BottomBar extends GetView<RootController> {
   const BottomBar({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Card(
-        elevation: 8.0,
-        margin: EdgeInsets.zero,
-        child: SafeArea(
-          bottom: true,
-          child: AnimatedContainer(
-            duration: const Duration(
-              milliseconds: 50,
+    return _buildBottom(context);
+  }
+
+  Widget _buildBottom(BuildContext context) {
+    return BottomAppBar(
+      shape: const CircularNotchedRectangle(),
+      color: Theme.of(context).colorScheme.primary,
+      child: IconTheme(
+          data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 6),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.home,
+                  ),
+                  onPressed: () {
+                    controller.changePage(PageConstants.BOTTOM_BAR_INDEX_HOME);
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.list),
+                  onPressed: () {},
+                ),
+                const SizedBox(
+                  width: 60,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.search_outlined),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: const Icon(Icons.person),
+                  onPressed: () {
+                    controller.changePage(PageConstants.BOTTOM_BAR_INDEX_LOGIN);
+                  },
+                ),
+              ],
             ),
-            height: kBottomNavigationBarHeight,
-            child: Wrap(children: [
-              BottomNavigationBar(
-                elevation: 0,
-                type: BottomNavigationBarType.fixed,
-                backgroundColor: Colors.white,
-                currentIndex: controller.currentIndex,
-                onTap: controller.changePage,
-                items: const [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home_outlined),
-                    activeIcon: Icon(Icons.home),
-                    label: "Home",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.location_on_outlined),
-                    activeIcon: Icon(Icons.location_on),
-                    label: "Mais próximo",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.search_outlined),
-                    activeIcon: Icon(Icons.search),
-                    label: "Search",
-                  ),
-                ],
-              ),
-            ]),
-          ),
-        )));
+          )),
+    );
   }
 }
