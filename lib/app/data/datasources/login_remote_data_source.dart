@@ -1,5 +1,4 @@
 import 'package:camp_finder/app/data/database/db.dart';
-import 'package:camp_finder/app/data/models/customer_response.dart';
 import 'package:camp_finder/app/domain/entities/customer.dart';
 import 'package:camp_finder/app/foundation/errors/failure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,6 +8,10 @@ abstract class LoginRemoteDataSource {
   Future<Customer?> loginEmail({
     required String login,
     required String pass,
+  });
+
+  Future<void> forgotPassword({
+    required String email,
   });
 }
 
@@ -52,6 +55,29 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
       throw AuthException.getFailureFromAuth(
         statusCode: e.code,
       );
+    }
+  }
+
+  @override
+  Future<void> forgotPassword({required String email}) {
+    return sendPasswordResetEmail(
+      email: email,
+    );
+  }
+
+  Future<void> sendPasswordResetEmail({
+    required String email,
+  }) async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw AuthException.getFailureFromAuth(
+        statusCode: e.code,
+      );
+    } catch (e) {
+      print('Erro ao enviar email de redefinição de senha: $e');
+      rethrow;
     }
   }
 }

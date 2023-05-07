@@ -9,42 +9,7 @@ import 'package:get/get.dart';
 import 'widgets/login_square_tile.dart';
 
 class LoginPage extends GetView<LoginController> {
-  LoginPage({Key? key}) : super(key: key);
-
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  // sign user in method
-  void signUserIn() async {
-    // show loading circle
-    showDialog(
-      context: Get.context!,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-
-    // try sign in
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: usernameController.text,
-        password: passwordController.text,
-      );
-      // pop the loading circle
-      Navigator.pop(Get.context!);
-
-      Get.toNamed(AppRoutes.HOME);
-    } on FirebaseAuthException catch (e) {
-      // pop the loading circle
-      Navigator.pop(Get.context!);
-
-      showErrorMessage(
-        errorMessage: e.code,
-      );
-    }
-  }
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -146,17 +111,25 @@ class LoginPage extends GetView<LoginController> {
   }
 
   Widget forgotPass() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 24.0, right: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          const Text(
-            'Esqueceu a Senha?',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-        ],
+    return InkWell(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 24.0, right: 6),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const Text(
+              'Esqueceu a Senha?',
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
+      onTap: () {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Get.toNamed(AppRoutes.FORGOT_PASSWORD_PAGE);
+        });
+      },
     );
   }
 

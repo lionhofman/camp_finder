@@ -37,4 +37,19 @@ class LoginRepositoryImpl implements LoginRepository {
       }
     }
   }
+
+  @override
+  Future<Either<Failure, void>> forgotPassword({required String email}) async {
+    try {
+      await _loginRemoteDataSource.forgotPassword(email: email);
+
+      return Right(Void);
+    } catch (e) {
+      if (e is Failure) {
+        return Left(e);
+      } else {
+        return Left(UnknownFailure());
+      }
+    }
+  }
 }

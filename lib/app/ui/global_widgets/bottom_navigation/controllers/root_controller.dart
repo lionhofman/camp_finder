@@ -37,9 +37,9 @@ class RootController extends GetxController {
         break;
 
       case PageConstants.BOTTOM_BAR_INDEX_LOGIN:
-        if (_authStore.isLoggedIn) {
-          index = PageConstants.BOTTOM_BAR_INDEX_HOME;
-        }
+        // if (_authStore.isLoggedIn) {
+        //   index = PageConstants.BOTTOM_BAR_INDEX_HOME;
+        // }
         break;
       default:
     }

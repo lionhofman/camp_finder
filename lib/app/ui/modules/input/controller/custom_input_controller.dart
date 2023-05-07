@@ -37,6 +37,15 @@ class CustomInputController extends GetxController {
   bool get showPass => _showPass.value;
   bool get showConfirmPass => _showConfirmPass.value;
 
+  @override
+  void dispose() {
+    nameTextController.dispose();
+    emailTextController.dispose();
+    passTextController.dispose();
+    confirmPassTextController.dispose();
+    super.dispose();
+  }
+
   // name
   setFullName(String value) {
     _fullName.value = value.trim();
@@ -200,5 +209,28 @@ class CustomInputController extends GetxController {
 
   bool allLoginCheck() {
     return checkLoginInputs() && checkValidLoginInputs();
+  }
+
+//forgot password
+  bool checkForgotPasswordInput() {
+    if (_chkInput(input: _email.value)) {
+      SnackbarCustom.showSnackbar(
+          message: ErrorMessages.EMAIL_ERROR, isError: true);
+      return false;
+    }
+    return true;
+  }
+
+  bool checkValidEmailInput() {
+    if (!(_emailIsValid.value)) {
+      SnackbarCustom.showSnackbar(
+          message: ErrorMessages.EMAIL_ERROR, isError: true);
+      return false;
+    }
+    return true;
+  }
+
+  bool allForgotPassCheck() {
+    return checkForgotPasswordInput() && checkValidEmailInput();
   }
 }

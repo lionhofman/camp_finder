@@ -7,4 +7,8 @@ abstract class LoginRepository {
     required String loginCustomer,
     required String password,
   });
+
+  Future<Either<Failure, void>> forgotPassword({
+    required String email,
+  });
 }

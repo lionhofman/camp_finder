@@ -3,6 +3,7 @@ import 'package:camp_finder/app/data/repositories/login_repository_impl.dart';
 import 'package:camp_finder/app/domain/repositories/login_repository.dart';
 import 'package:camp_finder/app/domain/usecases/login/login_email_use_case.dart';
 import 'package:camp_finder/app/ui/modules/auth/store/auth_store.dart';
+import 'package:camp_finder/app/ui/modules/forgot_password/forgot_password_binding.dart';
 import 'package:camp_finder/app/ui/modules/input/custom_input_binding.dart';
 import 'package:get/get.dart';
 
@@ -21,5 +22,6 @@ class LoginBinding implements Bindings {
           Get.find<LoginEmailUseCase>(),
         ));
     CustomInputBinding().dependencies();
+    ForgotPasswordBinding().dependencies();
   }
 }
