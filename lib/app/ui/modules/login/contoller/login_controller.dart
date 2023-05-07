@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:camp_finder/app/core/constants/page_constants.dart';
 import 'package:camp_finder/app/core/custom/snackbar_custom.dart';
-import 'package:camp_finder/app/ui/app_routes.dart';
+import 'package:camp_finder/app/ui/global_widgets/bottom_navigation/controllers/root_controller.dart';
 import 'package:get/get.dart';
 
 import 'package:camp_finder/app/domain/usecases/login/login_email_use_case.dart';
@@ -20,7 +21,7 @@ class LoginController extends GetxController {
     required String password,
   }) async {
     final _result = await loginEmailUseCase.call(
-        loginCustomer: loginCustomer, password: password);
+        loginCustomer: loginCustomer.trim(), password: password);
     _result.fold((_failureResult) {
       if (_failureResult.message != null) {
         SnackbarCustom.showSnackbar(
@@ -29,7 +30,8 @@ class LoginController extends GetxController {
     }, (r) async {
       SnackbarCustom.showSnackbar(
           message: 'Login efetuado com sucesso!', isError: false);
-      Get.toNamed(AppRoutes.HOME);
+      final RootController _rootController = Get.find<RootController>();
+      _rootController.changePage(PageConstants.BOTTOM_BAR_INDEX_HOME);
     });
   }
 }

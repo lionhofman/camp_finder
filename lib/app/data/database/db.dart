@@ -5,7 +5,8 @@ class DB {
   DB._();
   static final DB _instance = DB._();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  static const String DB_NAME = 'camps';
+  static const String DB_CAMP_NAME = 'camps';
+  static const String DB_USER_NAME = 'users';
   static get() {
     return DB._instance._firestore;
   }

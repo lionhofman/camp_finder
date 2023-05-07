@@ -27,7 +27,7 @@ class RegisterNewCustomerController extends GetxController {
   }) async {
     final _result = await addNewCustomerUseCase.call(
         nameCustomer: nameCustomer,
-        loginCustomer: loginCustomer,
+        loginCustomer: loginCustomer.trim(),
         password: password);
     _result.fold((_failureResult) {
       if (_failureResult.message != null) {

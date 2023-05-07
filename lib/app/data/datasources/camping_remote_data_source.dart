@@ -10,7 +10,7 @@ abstract class CampingRemoteDataSource {
 
 class CampingRemoteDataSourceImpl implements CampingRemoteDataSource {
   CollectionReference<Map<String, dynamic>> collection =
-      FirebaseFirestore.instance.collection(DB.DB_NAME);
+      FirebaseFirestore.instance.collection(DB.DB_CAMP_NAME);
   @override
   Future<List<Camping?>> getCampings() {
     return handleAllCampingRequest();

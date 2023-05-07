@@ -1,19 +1,19 @@
 import 'package:camp_finder/app/domain/entities/customer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CustomerResponse extends Customer {
   CustomerResponse({
     required super.code,
     required super.name,
     required super.email,
-    required super.password,
+    super.password,
   });
 
-  factory CustomerResponse.fromFirestore(Map<String, dynamic> data) {
+  factory CustomerResponse.fromFirestore(User? data) {
     return CustomerResponse(
-      code: data['code'] ?? '',
-      name: data['name'] ?? '',
-      email: data['email'] ?? '',
-      password: data['password'] ?? '',
+      code: data!.uid,
+      name: data.displayName!,
+      email: data.email!,
     );
   }
 

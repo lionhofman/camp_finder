@@ -1,5 +1,6 @@
 import 'package:camp_finder/app/core/constants/page_constants.dart';
 import 'package:camp_finder/app/ui/app_routes.dart';
+import 'package:camp_finder/app/ui/modules/auth/store/auth_store.dart';
 import 'package:camp_finder/app/ui/modules/camping/camping_page.dart';
 import 'package:camp_finder/app/ui/modules/home/home_page.dart';
 import 'package:camp_finder/app/ui/modules/login/login_page.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RootController extends GetxController {
+  final AuthStore _authStore;
   late List<Widget> _pages;
   final RxInt _previousIndex = 0.obs;
   final RxInt _currentIndex = 0.obs;
@@ -14,7 +16,9 @@ class RootController extends GetxController {
   int get previousIndex => _previousIndex.value;
   int get currentIndex => _currentIndex.value;
 
-  RootController() {
+  RootController(
+    this._authStore,
+  ) {
     _pages = [
       const HomePage(),
       CampingPage(),
@@ -33,7 +37,9 @@ class RootController extends GetxController {
         break;
 
       case PageConstants.BOTTOM_BAR_INDEX_LOGIN:
-        //TODO setup login page
+        if (_authStore.isLoggedIn) {
+          index = PageConstants.BOTTOM_BAR_INDEX_HOME;
+        }
         break;
       default:
     }

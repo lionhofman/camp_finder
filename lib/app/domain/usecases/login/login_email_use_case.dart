@@ -1,3 +1,4 @@
+import 'package:camp_finder/app/domain/entities/customer.dart';
 import 'package:camp_finder/app/domain/repositories/login_repository.dart';
 import 'package:camp_finder/app/foundation/errors/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -8,7 +9,7 @@ class LoginEmailUseCase {
     this._loginRepository,
   );
 
-  Future<Either<Failure, void>> call({
+  Future<Either<Failure, Customer?>> call({
     required String loginCustomer,
     required String password,
   }) async {
