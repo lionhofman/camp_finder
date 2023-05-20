@@ -9,6 +9,7 @@ import 'package:dartz/dartz.dart';
 import 'package:camp_finder/app/data/datasources/login_remote_data_source.dart';
 import 'package:camp_finder/app/domain/repositories/login_repository.dart';
 import 'package:camp_finder/app/foundation/errors/failure.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
   final LoginRemoteDataSource _loginRemoteDataSource;
@@ -43,6 +44,27 @@ class LoginRepositoryImpl implements LoginRepository {
     try {
       await _loginRemoteDataSource.forgotPassword(email: email);
 
+      return Right(Void);
+    } catch (e) {
+      if (e is Failure) {
+        return Left(e);
+      } else {
+        return Left(UnknownFailure());
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> signOut() async {
+    try {
+      await _loginRemoteDataSource.signOut();
+      if (FirebaseAuth.instance.currentUser != null) {
+        throw UnsupportedError(
+          'Usuário não foi deslogado do firebase corretamente',
+        );
+      } else {
+        _authStore.clearCustomer();
+      }
       return Right(Void);
     } catch (e) {
       if (e is Failure) {

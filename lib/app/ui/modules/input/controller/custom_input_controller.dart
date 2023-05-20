@@ -233,4 +233,15 @@ class CustomInputController extends GetxController {
   bool allForgotPassCheck() {
     return checkForgotPasswordInput() && checkValidEmailInput();
   }
+
+  clearAllInputs() {
+    _fullName.value = '';
+    _email.value = '';
+    _pass.value = '';
+    _confirmPass.value = '';
+    nameTextController.clear();
+    emailTextController.clear();
+    passTextController.clear();
+    confirmPassTextController.clear();
+  }
 }

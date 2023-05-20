@@ -13,6 +13,8 @@ abstract class LoginRemoteDataSource {
   Future<void> forgotPassword({
     required String email,
   });
+
+  Future<void> signOut();
 }
 
 class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
@@ -49,7 +51,6 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
         );
       });
 
-      // return CustomerResponse.fromFirestore(customer.user);
       return customer;
     } on FirebaseAuthException catch (e) {
       throw AuthException.getFailureFromAuth(
@@ -78,6 +79,17 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
     } catch (e) {
       print('Erro ao enviar email de redefinição de senha: $e');
       rethrow;
+    }
+  }
+
+  @override
+  Future<void> signOut() async {
+    try {
+      return await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
+      throw AuthException.getFailureFromAuth(
+        statusCode: e.code,
+      );
     }
   }
 }

@@ -8,6 +8,8 @@ abstract class LoginRepository {
     required String password,
   });
 
+  Future<Either<Failure, void>> signOut();
+
   Future<Either<Failure, void>> forgotPassword({
     required String email,
   });

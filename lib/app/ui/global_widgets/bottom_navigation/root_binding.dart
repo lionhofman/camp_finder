@@ -1,3 +1,4 @@
+import 'package:camp_finder/app/domain/usecases/login/logout_use_case.dart';
 import 'package:camp_finder/app/ui/global_widgets/bottom_navigation/controllers/root_controller.dart';
 import 'package:camp_finder/app/ui/modules/auth/auth_store_binding.dart';
 import 'package:camp_finder/app/ui/modules/auth/store/auth_store.dart';
@@ -13,9 +14,11 @@ class RootBinding implements Bindings {
     HomeBinding().dependencies();
     CampingBinding().dependencies();
     LoginBinding().dependencies();
+
     Get.put<RootController>(
       RootController(
         Get.find<AuthStore>(),
+        Get.find<LogoutUseCase>(),
       ),
     );
   }

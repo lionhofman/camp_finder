@@ -32,6 +32,12 @@ class AuthStore extends GetxController {
     if (box.isOpen) {
       box.clear();
     }
+    clearUserUID();
+  }
+
+  void clearUserUID() {
+    HiveDbService.instance.uidHiveBox
+        .put(LocalStorageConstants.UID_HIVE_BOX, null);
   }
 
   setUserUID(String value) => HiveDbService.instance.uidHiveBox

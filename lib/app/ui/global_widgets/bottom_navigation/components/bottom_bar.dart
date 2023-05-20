@@ -41,12 +41,18 @@ class BottomBar extends GetView<RootController> {
                   icon: const Icon(Icons.search_outlined),
                   onPressed: () {},
                 ),
-                IconButton(
-                  icon: const Icon(Icons.person),
-                  onPressed: () {
-                    controller.changePage(PageConstants.BOTTOM_BAR_INDEX_LOGIN);
-                  },
-                ),
+                Obx(() => IconButton(
+                      icon: Icon(
+                          controller.isLoggedIn ? Icons.logout : Icons.person),
+                      onPressed: () {
+                        if (controller.isLoggedIn) {
+                          controller.logout();
+                        } else {
+                          controller
+                              .changePage(PageConstants.BOTTOM_BAR_INDEX_LOGIN);
+                        }
+                      },
+                    )),
               ],
             ),
           )),
