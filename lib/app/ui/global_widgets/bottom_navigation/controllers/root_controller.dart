@@ -27,7 +27,7 @@ class RootController extends GetxController {
     _pages = [
       const HomePage(),
       CampingPage(),
-      LoginPage(),
+      const LoginPage(),
     ];
   }
 

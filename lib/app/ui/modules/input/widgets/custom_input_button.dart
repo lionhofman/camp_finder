@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
 class CustomInputButton extends StatelessWidget {
-  final Function()? onTap;
+  final VoidCallback? onTap;
   final String labelButton;
+  final bool isLoading;
 
   const CustomInputButton({
-    super.key,
+    Key? key,
     required this.onTap,
     required this.labelButton,
-  });
+    this.isLoading = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: isLoading ? null : onTap,
       child: Container(
         padding: const EdgeInsets.all(25),
         margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 22),
@@ -22,14 +24,18 @@ class CustomInputButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Center(
-          child: Text(
-            labelButton,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
+          child: isLoading
+              ? const CircularProgressIndicator(
+                  color: Colors.white,
+                )
+              : Text(
+                  labelButton,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
         ),
       ),
     );

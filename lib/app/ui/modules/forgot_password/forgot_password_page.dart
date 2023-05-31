@@ -9,22 +9,23 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
 
   @override
   Widget build(BuildContext context) {
+    ValueNotifier<bool> isLoading = ValueNotifier(false);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(24.0),
             child: Obx(
               () => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 24),
                   padlockImg(),
-                  // welcome back, you've been missed!
+                  const SizedBox(height: 24),
                   forgotPassTitle(),
-                  // username textfield
-
+                  const SizedBox(height: 24),
                   CustomInputText(
                     controller:
                         controller.customInputController.emailTextController,
@@ -36,21 +37,30 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                     clearField: controller.customInputController.clearEmail,
                     fieldText: controller.customInputController.email,
                   ),
+                  const SizedBox(height: 24),
+                  ValueListenableBuilder(
+                    valueListenable: isLoading,
+                    builder:
+                        (BuildContext context, bool loading, Widget? child) {
+                      return CustomInputButton(
+                        onTap: () async {
+                          if (controller.customInputController
+                              .allForgotPassCheck()) {
+                            isLoading.value = true;
 
-                  // sign in button
-                  CustomInputButton(
-                    onTap: () {
-                      if (controller.customInputController
-                          .allForgotPassCheck()) {
-                        controller.resetPassword(
-                          email: controller
-                              .customInputController.emailTextController.text,
-                        );
-                      }
+                            await controller.resetPassword(
+                              email: controller.customInputController
+                                  .emailTextController.text,
+                            );
+
+                            isLoading.value = false;
+                          }
+                        },
+                        isLoading: loading,
+                        labelButton: 'Redefinir a senha',
+                      );
                     },
-                    labelButton: "Redefinir a senha",
                   ),
-
                   const SizedBox(height: 30),
                 ],
               ),
@@ -62,24 +72,18 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
   }
 
   Widget padlockImg() {
-    return const Padding(
-      padding: EdgeInsets.only(bottom: 16, top: 50),
-      child: Icon(
-        Icons.password,
-        size: 100,
-      ),
+    return Icon(
+      Icons.lock_open,
+      size: 80,
+      color: Colors.grey[600],
     );
   }
 
   Widget forgotPassTitle() {
-    return const Padding(
-        padding: EdgeInsets.only(
-          top: 18,
-          bottom: 20,
-        ),
-        child: Text(
-          "Enviaremos um e-mail para redefinir sua senha!",
-          style: TextStyle(fontSize: 16),
-        ));
+    return const Text(
+      "Enviaremos um e-mail para redefinir sua senha!",
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      textAlign: TextAlign.center,
+    );
   }
 }

@@ -11,19 +11,22 @@ class RegisterNewCustomerPage extends GetView<RegisterNewCustomerController> {
 
   @override
   Widget build(BuildContext context) {
+    ValueNotifier<bool> isLoading = ValueNotifier(false);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(24.0),
             child: Obx(() => Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SizedBox(height: 24),
                     padlockImg(),
-                    // welcome back, you've been missed!
+                    const SizedBox(height: 24),
                     loginTitle(),
+                    const SizedBox(height: 24),
                     CustomInputText(
                       controller:
                           controller.customInputController.nameTextController,
@@ -36,6 +39,7 @@ class RegisterNewCustomerPage extends GetView<RegisterNewCustomerController> {
                           controller.customInputController.clearFullName,
                       fieldText: controller.customInputController.fullName,
                     ),
+                    const SizedBox(height: 24),
                     // username textfield
                     CustomInputText(
                       controller:
@@ -49,6 +53,7 @@ class RegisterNewCustomerPage extends GetView<RegisterNewCustomerController> {
                       clearField: controller.customInputController.clearEmail,
                       fieldText: controller.customInputController.email,
                     ),
+                    const SizedBox(height: 24),
                     // password textfield
                     CustomInputText(
                       controller:
@@ -63,7 +68,7 @@ class RegisterNewCustomerPage extends GetView<RegisterNewCustomerController> {
                       setShowPass: controller.customInputController.setShowPass,
                       showPass: controller.customInputController.showPass,
                     ),
-
+                    const SizedBox(height: 24),
                     // Confirm password textfield
                     CustomInputText(
                       controller: controller
@@ -83,23 +88,50 @@ class RegisterNewCustomerPage extends GetView<RegisterNewCustomerController> {
                       showPass:
                           controller.customInputController.showConfirmPass,
                     ),
-
-                    // sign up button
-                    CustomInputButton(
-                      onTap: () {
-                        if (controller.customInputController
-                            .allRegisterCheck()) {
-                          controller.addNewCustomer(
-                              nameCustomer: controller.customInputController
-                                  .nameTextController.text,
-                              loginCustomer: controller.customInputController
-                                  .emailTextController.text,
-                              password: controller.customInputController
-                                  .passTextController.text);
-                        }
+                    const SizedBox(height: 24),
+                    ValueListenableBuilder(
+                      valueListenable: isLoading,
+                      builder:
+                          (BuildContext context, bool loading, Widget? child) {
+                        return CustomInputButton(
+                          onTap: () async {
+                            if (controller.customInputController
+                                .allRegisterCheck()) {
+                              isLoading.value = true;
+                              await controller.addNewCustomer(
+                                  nameCustomer: controller.customInputController
+                                      .nameTextController.text,
+                                  loginCustomer: controller
+                                      .customInputController
+                                      .emailTextController
+                                      .text,
+                                  password: controller.customInputController
+                                      .passTextController.text);
+                              isLoading.value = false;
+                            }
+                          },
+                          isLoading: loading,
+                          labelButton: 'Cadastrar',
+                        );
                       },
-                      labelButton: "Cadastrar",
                     ),
+                    // sign up button
+                    // CustomInputButton(
+                    //   onTap: () {
+                    //     if (controller.customInputController
+                    //         .allRegisterCheck()) {
+                    //       controller.addNewCustomer(
+                    //           nameCustomer: controller.customInputController
+                    //               .nameTextController.text,
+                    //           loginCustomer: controller.customInputController
+                    //               .emailTextController.text,
+                    //           password: controller.customInputController
+                    //               .passTextController.text);
+                    //     }
+                    //   },
+                    //   labelButton: "Cadastrar",
+                    // ),
+                    const SizedBox(height: 30),
                     // or continue with
                     orContinueWith(),
                     const SizedBox(height: 30),
@@ -118,82 +150,79 @@ class RegisterNewCustomerPage extends GetView<RegisterNewCustomerController> {
   }
 
   Widget loginTitle() {
-    return const Padding(
-        padding: EdgeInsets.only(
-          top: 18,
-          bottom: 20,
-        ),
-        child: Text(
-          "Cadastre-se agora!",
-          style: TextStyle(fontSize: 16),
-        ));
+    return const Text(
+      "Cadastre-se agora!",
+      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      textAlign: TextAlign.center,
+    );
   }
 
   Widget padlockImg() {
-    return const Padding(
-      padding: EdgeInsets.only(bottom: 16, top: 50),
-      child: Icon(
-        Icons.lock,
-        size: 100,
-      ),
+    return Icon(
+      Icons.person_add,
+      size: 80,
+      color: Colors.grey[600],
     );
   }
 
   Widget orContinueWith() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 12),
-      child: Row(
-        children: [
-          Expanded(
-            child: Divider(
-              thickness: 0.5,
-              color: Colors.grey[400],
-            ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Divider(
+            thickness: 1,
+            color: Colors.grey[400],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 22),
-            child: Text(
-              'Ou continue com',
-              style: TextStyle(color: Colors.grey[700]),
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 22),
+          child: Text(
+            'Ou continue com',
+            style: TextStyle(color: Colors.grey[700], fontSize: 16),
           ),
-          Expanded(
-            child: Divider(
-              thickness: 0.5,
-              color: Colors.grey[400],
-            ),
+        ),
+        Expanded(
+          child: Divider(
+            thickness: 1,
+            color: Colors.grey[400],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   Widget googleSignInIcon() {
-    return const LoginSquareTile(imagePath: 'assets/png/google.png');
+    return IconButton(
+      iconSize: 50,
+      icon: Image.asset('assets/png/google.png'),
+      onPressed: () {
+        // Handle Google login
+      },
+    );
   }
 
   Widget signInLink() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'Já é cadastrado?',
-          style: TextStyle(color: Colors.grey[700]),
-        ),
-        const SizedBox(width: 4),
-        InkWell(
-          child: const Text(
-            'Faça o login agora',
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
+    return InkWell(
+      onTap: () {
+        Get.toNamed(AppRoutes.LOGIN_PAGE);
+      },
+      child: RichText(
+        text: TextSpan(
+          text: 'Já é cadastrado? ',
+          style: TextStyle(color: Colors.grey[700], fontSize: 16),
+          children: const <TextSpan>[
+            TextSpan(
+              text: 'Faça o login agora',
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          onTap: () {
-            Get.toNamed(AppRoutes.LOGIN_PAGE);
-          },
+          ],
         ),
-      ],
+      ),
     );
   }
 

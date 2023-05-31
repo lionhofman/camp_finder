@@ -2,33 +2,29 @@ import 'package:camp_finder/app/ui/app_routes.dart';
 import 'package:camp_finder/app/ui/modules/input/widgets/custom_input_button.dart';
 import 'package:camp_finder/app/ui/modules/input/widgets/custom_input_text.dart';
 import 'package:camp_finder/app/ui/modules/login/contoller/login_controller.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'widgets/login_square_tile.dart';
 
 class LoginPage extends GetView<LoginController> {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ValueNotifier<bool> isLoading = ValueNotifier(false);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(24.0),
             child: Obx(
               () => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   padlockImg(),
-                  // welcome back, you've been missed!
                   loginTitle(),
-                  // username textfield
-
+                  const SizedBox(height: 16),
                   CustomInputText(
                     controller:
                         controller.customInputController.emailTextController,
@@ -40,7 +36,7 @@ class LoginPage extends GetView<LoginController> {
                     clearField: controller.customInputController.clearEmail,
                     fieldText: controller.customInputController.email,
                   ),
-                  // password textfield
+                  const SizedBox(height: 16),
                   CustomInputText(
                     controller:
                         controller.customInputController.passTextController,
@@ -54,29 +50,36 @@ class LoginPage extends GetView<LoginController> {
                     setShowPass: controller.customInputController.setShowPass,
                     showPass: controller.customInputController.showPass,
                   ),
-
-                  // forgot password?
+                  const SizedBox(height: 16),
                   forgotPass(),
-                  // sign in button
-                  CustomInputButton(
-                    onTap: () {
-                      if (controller.customInputController.allLoginCheck()) {
-                        controller.loginEmail(
-                            loginCustomer: controller
-                                .customInputController.emailTextController.text,
-                            password: controller
-                                .customInputController.passTextController.text);
-                      }
+                  ValueListenableBuilder(
+                    valueListenable: isLoading,
+                    builder:
+                        (BuildContext context, bool loading, Widget? child) {
+                      return CustomInputButton(
+                        onTap: () async {
+                          if (controller.customInputController
+                              .allLoginCheck()) {
+                            isLoading.value = true;
+
+                            await controller.loginEmail(
+                                loginCustomer: controller.customInputController
+                                    .emailTextController.text,
+                                password: controller.customInputController
+                                    .passTextController.text);
+
+                            isLoading.value = false;
+                          }
+                        },
+                        isLoading: loading,
+                        labelButton: 'Entrar',
+                      );
                     },
-                    labelButton: "Entrar",
                   ),
-                  // or continue with
                   orContinueWith(),
                   const SizedBox(height: 30),
-                  // google sign in button
                   googleSignInIcon(),
                   const SizedBox(height: 50),
-                  // not a member? register now
                   signInLink(),
                   const SizedBox(height: 60),
                 ],
@@ -89,43 +92,28 @@ class LoginPage extends GetView<LoginController> {
   }
 
   Widget loginTitle() {
-    return const Padding(
-        padding: EdgeInsets.only(
-          top: 18,
-          bottom: 20,
-        ),
-        child: Text(
-          "Faça seu login!",
-          style: TextStyle(fontSize: 16),
-        ));
+    return const Text(
+      "Faça seu login!",
+      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      textAlign: TextAlign.center,
+    );
   }
 
   Widget padlockImg() {
-    return const Padding(
-      padding: EdgeInsets.only(bottom: 16, top: 50),
-      child: Icon(
-        Icons.lock,
-        size: 100,
-      ),
+    return Icon(
+      Icons.lock,
+      size: 80,
+      color: Colors.grey[600],
     );
   }
 
   Widget forgotPass() {
-    return InkWell(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 24.0, right: 6),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            const Text(
-              'Esqueceu a Senha?',
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
+    return TextButton(
+      child: const Text(
+        'Esqueceu a Senha?',
+        style: TextStyle(color: Colors.blue),
       ),
-      onTap: () {
+      onPressed: () {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Get.toNamed(AppRoutes.FORGOT_PASSWORD_PAGE);
         });
@@ -135,13 +123,13 @@ class LoginPage extends GetView<LoginController> {
 
   Widget orContinueWith() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
           Expanded(
             child: Divider(
-              thickness: 0.5,
-              color: Colors.grey[400],
+              thickness: 1,
+              color: Colors.grey[600],
             ),
           ),
           Padding(
@@ -153,8 +141,8 @@ class LoginPage extends GetView<LoginController> {
           ),
           Expanded(
             child: Divider(
-              thickness: 0.5,
-              color: Colors.grey[400],
+              thickness: 1,
+              color: Colors.grey[600],
             ),
           ),
         ],
@@ -163,31 +151,27 @@ class LoginPage extends GetView<LoginController> {
   }
 
   Widget googleSignInIcon() {
-    return const LoginSquareTile(imagePath: 'assets/png/google.png');
+    return IconButton(
+      iconSize: 50,
+      icon: Image.asset('assets/png/google.png'),
+      onPressed: () {
+        // Handle Google login
+      },
+    );
   }
 
   Widget signInLink() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'Não é cadastrado ainda?',
-          style: TextStyle(color: Colors.grey[700]),
+    return TextButton(
+      child: const Text(
+        'Não é cadastrado ainda? Se cadastre agora',
+        style: TextStyle(
+          color: Colors.blue,
+          fontWeight: FontWeight.bold,
         ),
-        const SizedBox(width: 4),
-        InkWell(
-          child: const Text(
-            'Se cadastre agora',
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onTap: () {
-            Get.toNamed(AppRoutes.REGISTER_PAGE);
-          },
-        ),
-      ],
+      ),
+      onPressed: () {
+        Get.toNamed(AppRoutes.REGISTER_PAGE);
+      },
     );
   }
 

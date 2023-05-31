@@ -36,7 +36,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.LOGIN_PAGE,
-      page: () => LoginPage(),
+      page: () => const LoginPage(),
       binding: LoginBinding(),
       transition: Transition.cupertino,
     ),
