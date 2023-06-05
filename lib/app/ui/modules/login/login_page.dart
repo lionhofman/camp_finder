@@ -151,11 +151,16 @@ class LoginPage extends GetView<LoginController> {
   }
 
   Widget googleSignInIcon() {
-    return IconButton(
-      iconSize: 50,
-      icon: Image.asset('assets/png/google.png'),
-      onPressed: () {
-        // Handle Google login
+    return ValueListenableBuilder(
+      valueListenable: controller.isLoadingGoogleSignIn,
+      builder: (BuildContext context, bool isLoading, _) {
+        return isLoading
+            ? const CircularProgressIndicator() // Mostra um spinner de carregamento se o login estiver em andamento.
+            : IconButton(
+                iconSize: 50,
+                icon: Image.asset('assets/png/google.png'),
+                onPressed: controller.loginSocialGoogle,
+              );
       },
     );
   }

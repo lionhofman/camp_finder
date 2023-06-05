@@ -3,6 +3,7 @@ import 'package:camp_finder/app/domain/entities/customer.dart';
 import 'package:camp_finder/app/foundation/errors/failure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class LoginRemoteDataSource {
   Future<Customer?> loginEmail({
@@ -13,6 +14,8 @@ abstract class LoginRemoteDataSource {
   Future<void> forgotPassword({
     required String email,
   });
+
+  socialGoogleEmail();
 
   Future<void> signOut();
 }
@@ -86,6 +89,29 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
   Future<void> signOut() async {
     try {
       return await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
+      throw AuthException.getFailureFromAuth(
+        statusCode: e.code,
+      );
+    }
+  }
+
+  @override
+  socialGoogleEmail() async {
+    try {
+      //begin interactive sign in process
+      final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+      //obtain auth details from request
+      final GoogleSignInAuthentication gAuth = await gUser!.authentication;
+
+      // create a new credential for user
+      final credential = GoogleAuthProvider.credential(
+        accessToken: gAuth.accessToken,
+        idToken: gAuth.idToken,
+      );
+      // finally, lets sign in
+
+      return await FirebaseAuth.instance.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       throw AuthException.getFailureFromAuth(
         statusCode: e.code,

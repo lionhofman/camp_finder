@@ -41,18 +41,29 @@ class BottomBar extends GetView<RootController> {
                   icon: const Icon(Icons.search_outlined),
                   onPressed: () {},
                 ),
-                Obx(() => IconButton(
-                      icon: Icon(
-                          controller.isLoggedIn ? Icons.logout : Icons.person),
-                      onPressed: () {
-                        if (controller.isLoggedIn) {
-                          controller.logout();
-                        } else {
-                          controller
-                              .changePage(PageConstants.BOTTOM_BAR_INDEX_LOGIN);
-                        }
-                      },
-                    )),
+                ValueListenableBuilder(
+                  valueListenable: controller.isLoadingLogout,
+                  builder: (BuildContext context, bool isLoading, _) {
+                    return isLoading
+                        ? const CircularProgressIndicator(
+                            color: Colors
+                                .white, // Define a cor do CircularProgressIndicator para branco.
+                          )
+                        : Obx(() => IconButton(
+                              icon: Icon(controller.isLoggedIn
+                                  ? Icons.logout
+                                  : Icons.person),
+                              onPressed: () {
+                                if (controller.isLoggedIn) {
+                                  controller.logout();
+                                } else {
+                                  controller.changePage(
+                                      PageConstants.BOTTOM_BAR_INDEX_LOGIN);
+                                }
+                              },
+                            ));
+                  },
+                ),
               ],
             ),
           )),

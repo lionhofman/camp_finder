@@ -13,6 +13,7 @@ import 'package:camp_finder/app/ui/modules/home/home_page.dart';
 import 'package:camp_finder/app/ui/modules/login/login_page.dart';
 
 class RootController extends GetxController {
+  final isLoadingLogout = ValueNotifier<bool>(false);
   final AuthStore _authStore;
   late List<Widget> _pages;
   final RxInt _previousIndex = 0.obs;
@@ -66,6 +67,7 @@ class RootController extends GetxController {
   }
 
   Future<void> logout() async {
+    isLoadingLogout.value = true;
     final _result = await logoutUseCase.call();
     _result.fold((_failureResult) {
       if (_failureResult.message != null) {
@@ -79,6 +81,7 @@ class RootController extends GetxController {
       final LoginController _loginController = Get.find<LoginController>();
       _loginController.customInputController.clearAllInputs();
       _isLoggedIn.value = false;
+      isLoadingLogout.value = false;
     });
   }
 

@@ -13,4 +13,6 @@ abstract class LoginRepository {
   Future<Either<Failure, void>> forgotPassword({
     required String email,
   });
+
+  Future<Either<Failure, void>> socialGoogleEmail();
 }
