@@ -9,49 +9,73 @@ class OfferServiceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HorizontalList(
-      itemCount: getOfferList().take(4).length,
-      itemBuilder: (BuildContext context, int index) {
-        ModelServices data = getOfferList()[index];
+    return SizedBox(
+        height: 300,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: getOfferList().take(4).length,
+          itemBuilder: (BuildContext context, int index) {
+            ModelServices data = getOfferList()[index];
 
-        return Container(
-          width: 280,
-          margin: EdgeInsets.all(8),
-          padding: EdgeInsets.only(top: 24, bottom: 24, left: 8, right: 8),
-          decoration: boxDecorationRoundedWithShadow(8,
-              backgroundColor: context.cardColor),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              commonCacheImageWidget(data.img.validate(), 80, fit: BoxFit.cover)
-                  .center(),
-              16.width,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(data.title.validate(), style: primaryTextStyle()),
-                  Text(data.subTitle.validate(),
-                      style:
-                          primaryTextStyle(color: appColorPrimary, size: 18)),
-                  8.height,
-                  AppButton(
-                    padding:
-                        EdgeInsets.only(top: 8, bottom: 8, right: 16, left: 16),
-                    onTap: () {},
-                    text: 'View Offer',
-                    textColor: white,
-                    color: appColorPrimary,
-                  )
-                ],
-              )
-            ],
-          ),
-        ).onTap(() {
-          // LSServiceDetailScreen().launch(context);
-        });
-      },
-    );
+            return InkWell(
+              onTap: () {
+                // LSServiceDetailScreen().launch(context);
+              },
+              child: Container(
+                width: 280,
+                margin: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: context.cardColor,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0, 2),
+                      blurRadius: 6.0,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8),
+                        ),
+                        child: commonCacheImageWidget(data.img.validate(), 80,
+                            fit: BoxFit.cover),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(data.title.validate(),
+                              style: primaryTextStyle()),
+                          Text(data.subTitle.validate(),
+                              style: primaryTextStyle(
+                                  color: appColorPrimary, size: 18)),
+                          SizedBox(height: 8),
+                          AppButton(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 16),
+                            onTap: () {},
+                            text: 'View Offer',
+                            textColor: white,
+                            color: appColorPrimary,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ));
   }
 }

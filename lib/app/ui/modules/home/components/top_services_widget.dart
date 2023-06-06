@@ -8,30 +8,52 @@ class TopServicesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HorizontalList(
-      itemCount: getTopServiceList().length,
-      itemBuilder: (BuildContext context, int index) {
-        ModelServices data = getTopServiceList()[index];
+    return SizedBox(
+      height: 130,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: getTopServiceList().length,
+        itemBuilder: (BuildContext context, int index) {
+          ModelServices data = getTopServiceList()[index];
 
-        return Column(
-          children: [
-            Container(
-              height: 80,
-              width: 80,
-              alignment: Alignment.center,
+          return InkWell(
+            onTap: () {
+              // ServiceDetail().launch(context);
+            },
+            child: Container(
+              width: 120,
               margin: const EdgeInsets.all(8),
-              decoration: boxDecorationRoundedWithShadow(40,
-                  backgroundColor: context.cardColor),
-              child: commonCacheImageWidget(data.img.validate(), 50,
-                  width: 50, fit: BoxFit.cover),
+              child: Column(
+                children: [
+                  Material(
+                    elevation: 4.0,
+                    borderRadius: BorderRadius.circular(40),
+                    child: Container(
+                      height: 80,
+                      width: 80,
+                      decoration: boxDecorationRoundedWithShadow(40,
+                          backgroundColor: context.cardColor),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: commonCacheImageWidget(data.img.validate(), 50,
+                            width: 50, fit: BoxFit.cover),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    data.title.validate(),
+                    style: primaryTextStyle(),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
-            8.height,
-            Text(data.title.validate(), style: primaryTextStyle()),
-          ],
-        ).onTap(() {
-          // ServiceDetail().launch(context);
-        });
-      },
+            splashColor:
+                Colors.blue.withAlpha(30), // Personalize a cor do splash aqui
+          );
+        },
+      ),
     );
   }
 }
