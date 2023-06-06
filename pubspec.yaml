@@ -62,8 +62,12 @@ dependencies:
   nb_utils: ^5.0.8
   #IMAGES
   cached_network_image: ^3.2.3
-  #url_launcher: ^6.1.10
+  url_launcher: ^6.1.10
+  youtube_player_flutter: ^8.1.2
+  flutter_rating_bar: ^4.0.1
   google_fonts: ^4.0.3
+
+  font_awesome_flutter: ^10.4.0
 
   hive: ^2.2.3
   hive_flutter: ^1.1.0
@@ -103,6 +107,7 @@ flutter:
   assets:
       - assets/svg/
       - assets/png/
+      - assets/images/
       - assets/map/
       - assets/newlayout/
       - assets/newlayout/images/

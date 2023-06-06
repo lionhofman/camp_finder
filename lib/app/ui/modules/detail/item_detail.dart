@@ -1,8 +1,11 @@
 import 'package:camp_finder/app/core/constants/colors.dart';
-import 'package:camp_finder/app/core/img_cache/img_cache_custom.dart';
 import 'package:camp_finder/app/domain/entities/camping.dart';
 import 'package:camp_finder/app/ui/modules/detail/tabs/about_us.dart';
+import 'package:camp_finder/app/ui/modules/detail/tabs/gallery.dart';
+import 'package:camp_finder/app/ui/modules/detail/tabs/info_page.dart';
+import 'package:camp_finder/app/ui/modules/detail/tabs/reviews_page.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class ItemDetail extends StatelessWidget {
@@ -14,187 +17,151 @@ class ItemDetail extends StatelessWidget {
     return Scaffold(
       body: DefaultTabController(
         length: 4,
-        child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back,
-                      color: innerBoxIsScrolled ? black : white),
-                  onPressed: () {
-                    finish(context);
-                  },
-                ),
-                pinned: true,
-                elevation: 0.5,
-                expandedHeight: 370,
-                flexibleSpace: FlexibleSpaceBar(
-                  titlePadding:
-                      const EdgeInsets.only(bottom: 85, left: 45, right: 50),
-                  collapseMode: CollapseMode.parallax,
-                  title: Text(
-                    campDetails.title,
-                    style: boldTextStyle(),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ).visible(innerBoxIsScrolled),
-                  background: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Stack(
-                        children: [
-                          commonCacheImageWidget(campDetails.image, 300,
-                              width: context.width(), fit: BoxFit.cover),
-                          Container(
-                            height: 300,
-                            width: context.width(),
-                            color: black.withOpacity(0.4),
-                          ),
-                          Positioned(
-                            bottom: 8,
-                            left: 16,
-                            right: 16,
-                            child: Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(campDetails.title,
-                                        style: boldTextStyle(
-                                            size: 20, color: white)),
-                                    4.height,
-                                    Text(campDetails.nameCamping,
-                                        style:
-                                            secondaryTextStyle(color: white)),
-                                    4.height,
-                                    Text(campDetails.address,
-                                        style:
-                                            secondaryTextStyle(color: white)),
-                                    4.height,
-                                    Row(
-                                      children: [
-                                        RatingBarWidget(
-                                          rating: 2.5,
-                                          size: 20,
-                                          disable: true,
-                                          onRatingChanged: (aRating) {
-                                            // rating = aRating;
-                                          },
-                                        ),
-                                        4.width,
-                                        Text('(90 Reviews)',
-                                            style: secondaryTextStyle(
-                                                color: white)),
-                                      ],
-                                    )
-                                  ],
-                                ).expand(),
-                                Column(
-                                  children: [
-                                    Text('0.2 Km Away',
-                                        style: secondaryTextStyle(
-                                            color: appColorPrimary)),
-                                    8.height,
-                                    Container(
-                                      padding: EdgeInsets.only(
-                                          left: 8, right: 8, top: 6, bottom: 6),
-                                      decoration:
-                                          boxDecorationWithRoundedCorners(
-                                              backgroundColor: Colors.green,
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                      child: Text('Open'.toUpperCase(),
-                                          style:
-                                              primaryTextStyle(color: white)),
-                                    ),
-                                  ],
-                                )
-                              ],
+        child: Builder(
+          builder: (BuildContext context) {
+            final TabController tabController =
+                DefaultTabController.of(context);
+            final ScrollController scrollController =
+                PrimaryScrollController.of(context);
+            return NestedScrollView(
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  SliverAppBar(
+                    leading: IconButton(
+                      icon: Icon(Icons.arrow_back,
+                          color: innerBoxIsScrolled ? black : white, size: 30),
+                      onPressed: () {
+                        finish(context);
+                      },
+                    ),
+                    automaticallyImplyLeading: false,
+                    backgroundColor: appColorPrimary,
+                    expandedHeight: 370,
+                    flexibleSpace: FlexibleSpaceBar(
+                      titlePadding: const EdgeInsets.only(
+                          bottom: 85, left: 45, right: 50),
+                      collapseMode: CollapseMode.pin,
+                      background: Stack(
+                        fit: StackFit.expand,
+                        children: <Widget>[
+                          Image.network(campDetails.image, fit: BoxFit.cover),
+                          DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0x60000000), Color(0x00000000)],
+                                stops: [0.0, 0.75],
+                                begin: Alignment(0.0, 1.0),
+                                end: Alignment(0.0, 0.0),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 200,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(campDetails.title,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 30)),
+                                          Text(campDetails.address,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18)),
+                                          Row(
+                                            children: [
+                                              RatingBarWidget(
+                                                rating: 2.5,
+                                                size: 20,
+                                                disable: true,
+                                                onRatingChanged: (aRating) {},
+                                              ),
+                                              SizedBox(width: 4),
+                                              Text('(90 Reviews)',
+                                                  style: secondaryTextStyle(
+                                                      color: white)),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text('0.2 Km Away',
+                                              style: secondaryTextStyle(
+                                                  color: white)),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 6),
+                                            decoration:
+                                                boxDecorationWithRoundedCorners(
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                            child: Text('Open'.toUpperCase(),
+                                                style: primaryTextStyle(
+                                                    color: white)),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      16.height,
-                    ],
+                    ),
+                    floating: true,
+                    pinned: true,
+                    snap: true,
+                    bottom: TabBar(
+                      unselectedLabelColor: Colors.grey,
+                      indicatorWeight: 5,
+                      labelStyle: boldTextStyle(color: black),
+                      tabs: [
+                        Tab(text: "Sobre", icon: Icon(Icons.my_location)),
+                        Tab(text: "Galeria", icon: Icon(Icons.photo_library)),
+                        Tab(
+                            text: "Reviews",
+                            icon: FaIcon(FontAwesomeIcons.commentDots)),
+                        Tab(text: "Mais info", icon: Icon(Icons.info)),
+                      ],
+                    ),
                   ),
-                ),
-                bottom: TabBar(
-                  labelStyle: boldTextStyle(color: black),
-                  labelColor: appColorPrimary,
-                  isScrollable: false,
-                  tabs: [
-                    Tab(
-                      height: 65,
-                      child: Column(
-                        children: [
-                          const Icon(Icons.my_location,
-                              size: 30, color: appColorPrimary),
-                          10.height,
-                          Text('Sobre'.toUpperCase(),
-                              style: primaryTextStyle(size: 13)),
-                        ],
-                      ),
-                    ),
-                    Tab(
-                      height: 65,
-                      child: Column(
-                        children: [
-                          const Icon(Icons.room_service,
-                              size: 30, color: appColorPrimary),
-                          10.height,
-                          Text('Serviços'.toUpperCase(),
-                              style: primaryTextStyle(size: 13)),
-                        ],
-                      ),
-                    ),
-                    Tab(
-                      height: 65,
-                      child: Column(
-                        children: [
-                          const Icon(Icons.monetization_on,
-                              size: 30, color: appColorPrimary),
-                          10.height,
-                          Text('taxas'.toUpperCase(),
-                              style: primaryTextStyle(size: 13)),
-                        ],
-                      ),
-                    ),
-                    Tab(
-                      height: 65,
-                      child: Column(
-                        children: [
-                          const Icon(Icons.info,
-                              size: 30, color: appColorPrimary),
-                          10.height,
-                          Text('Mais info'.toUpperCase(),
-                              style: primaryTextStyle(size: 13)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ];
-          },
-          body: TabBarView(
-            children: [
-              AboutUs(campDetails: campDetails),
-              AboutUs(campDetails: campDetails),
-              AboutUs(campDetails: campDetails),
-              AboutUs(campDetails: campDetails),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: boxDecorationWithShadow(backgroundColor: context.cardColor),
-        padding: const EdgeInsets.all(8),
-        child: AppButton(
-          text: 'Schedule a pickup'.toUpperCase(),
-          textColor: white,
-          color: appColorPrimary,
-          onTap: () {
-            // LSScheduleScreen().launch(context);
+                ];
+              },
+              body: TabBarView(
+                controller: tabController,
+                // physics: scrollController.hasClients &&
+                //         scrollController.offset > (370 - kToolbarHeight)
+                //     ? AlwaysScrollableScrollPhysics()
+                //     : NeverScrollableScrollPhysics(),
+                children: [
+                  AboutUs(campDetails: campDetails),
+                  Gallery(imgUrl: campDetails.image),
+                  ReviewPage(),
+                  InfoPage(),
+                ],
+              ),
+            );
           },
         ),
       ),

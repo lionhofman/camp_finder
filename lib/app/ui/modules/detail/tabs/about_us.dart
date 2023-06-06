@@ -1,6 +1,5 @@
 import 'package:camp_finder/app/core/constants/colors.dart';
-import 'package:camp_finder/app/core/constants/images.dart';
-import 'package:camp_finder/app/core/img_cache/img_cache_custom.dart';
+
 import 'package:camp_finder/app/domain/entities/camping.dart';
 import 'package:flutter/material.dart';
 
@@ -20,88 +19,77 @@ class _AboutUsState extends State<AboutUs> {
     return Scaffold(
       backgroundColor: context.scaffoldBackgroundColor,
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Divider(thickness: 3, color: lightGrey.withOpacity(0.4)),
-            Container(
-              margin: EdgeInsets.all(8),
-              padding: EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('About Us', style: boldTextStyle()),
-                  8.height,
-                  Text(widget.campDetails.about,
-                      style: secondaryTextStyle(), textAlign: TextAlign.start),
-                  16.height,
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Addresses', style: boldTextStyle()),
-                          8.height,
-                          Text(widget.campDetails.address,
-                              style: secondaryTextStyle()),
-                          8.height,
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Icon(Icons.directions,
-                                          color: appColorPrimary, size: 16)
-                                      .paddingRight(4),
-                                ),
-                                TextSpan(
-                                    text: 'Get Directions - 0.2 KM',
-                                    style: primaryTextStyle(
-                                        color: appColorPrimary)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ).expand(),
-                      16.width,
-                      Stack(
-                        children: [
-                          commonCacheImageWidget(LSMap, 100,
-                              width: 150, fit: BoxFit.cover),
-                          Container(
-                            height: 100,
-                            width: 150,
-                            color: black.withOpacity(0.5),
-                          ),
-                          Container(
-                            height: 100,
-                            width: 150,
-                            decoration: boxDecorationWithShadow(),
-                            child: Text('Show Map', style: boldTextStyle())
-                                .center(),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  12.height,
-                  Text('Opening Hours', style: boldTextStyle()),
-                  16.height,
-                  UL(
-                    symbolType: SymbolType.Bullet,
-                    children: [
-                      Text('Monday : 08:00 AM - 08:00 PM',
-                          style: primaryTextStyle()),
-                      Text('Tuesday : 08:00 AM - 08:00 PM',
-                          style: primaryTextStyle()),
-                      Text('Friday : 08:00 AM - 08:00 PM',
-                          style: primaryTextStyle()),
-                    ],
-                  ),
-                ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Divider(thickness: 1, color: Colors.grey),
+              const Text('About Us',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              Text(
+                widget.campDetails.about,
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              const Text('Address',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              Text(
+                widget.campDetails.address,
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              ),
+              const SizedBox(height: 10),
+              TextButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.directions, color: appColorPrimary),
+                label: const Text(
+                  'Get Directions - 0.2 KM',
+                  style: TextStyle(color: appColorPrimary),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                height: 100,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: const AssetImage('assets/images/ls_Map.jpg'),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.4), BlendMode.darken),
+                  ),
+                ),
+                alignment: Alignment.center,
+                child: const Text(
+                  'Show Map',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text('Opening Hours',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              for (var day in ['Monday', 'Tuesday', 'Friday'])
+                ListTile(
+                  leading: const Icon(Icons.access_time, color: Colors.black54),
+                  title: Text(
+                    '$day: 08:00 AM - 08:00 PM',
+                    style: TextStyle(color: Colors.black87),
+                  ),
+                ),
+            ],
+          ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: appColorPrimary,
+        child: const Icon(Icons.favorite_border),
       ),
     );
   }
