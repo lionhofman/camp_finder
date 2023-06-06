@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -35,70 +35,66 @@ class Gallery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        height: 200, // Altura da galeria
-        child: PageView.custom(
-          physics: NeverScrollableScrollPhysics(),
-          controller: PageController(viewportFraction: 0.8),
-          childrenDelegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              if (mediaList[index].type == MediaType.photo) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
-                    child: Image.network(
-                      mediaList[index].url,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-                        );
-                      },
-                      errorBuilder: (BuildContext context, Object exception,
-                          StackTrace? stackTrace) {
-                        return const Text('Erro ao carregar imagem');
-                      },
-                    ),
+      child: SizedBox(
+        height: Get.height,
+        child: ListView.builder(
+          itemCount: mediaList.length,
+          itemBuilder: (BuildContext context, int index) {
+            if (mediaList[index].type == MediaType.photo) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.network(
+                    mediaList[index].url,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                      return const Text('Erro ao carregar imagem');
+                    },
                   ),
-                );
-              } else if (mediaList[index].type == MediaType.video) {
-                String? videoId =
-                    YoutubePlayer.convertUrlToId(mediaList[index].url);
-                if (videoId == null) {
-                  return const Text('Erro ao carregar vídeo');
-                }
-                YoutubePlayerController _controller = YoutubePlayerController(
-                  initialVideoId: videoId,
-                  flags: const YoutubePlayerFlags(
-                    autoPlay: false,
-                    mute: false,
-                  ),
-                );
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
-                    child: YoutubePlayer(
-                      controller: _controller,
-                      showVideoProgressIndicator: true,
-                    ),
-                  ),
-                );
+                ),
+              );
+            } else if (mediaList[index].type == MediaType.video) {
+              String? videoId =
+                  YoutubePlayer.convertUrlToId(mediaList[index].url);
+              if (videoId == null) {
+                return const Text('Erro ao carregar vídeo');
               }
-              return Container(); // Retorna um container vazio se nenhum tipo correspondente for encontrado
-            },
-            childCount: mediaList.length,
-          ),
+              YoutubePlayerController _controller = YoutubePlayerController(
+                initialVideoId: videoId,
+                flags: const YoutubePlayerFlags(
+                  autoPlay: false,
+                  mute: false,
+                ),
+              );
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: YoutubePlayer(
+                    controller: _controller,
+                    showVideoProgressIndicator: true,
+                  ),
+                ),
+              );
+            }
+            return Container();
+          },
         ),
       ),
     );

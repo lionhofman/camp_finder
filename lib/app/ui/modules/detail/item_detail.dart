@@ -129,14 +129,15 @@ class ItemDetail extends StatelessWidget {
                         ],
                       ),
                     ),
-                    floating: true,
+                    floating: false,
                     pinned: true,
-                    snap: true,
+                    snap: false,
                     bottom: TabBar(
                       unselectedLabelColor: Colors.grey,
                       indicatorWeight: 5,
+                      indicatorColor: Colors.white,
                       labelStyle: boldTextStyle(color: black),
-                      tabs: [
+                      tabs: const [
                         Tab(text: "Sobre", icon: Icon(Icons.my_location)),
                         Tab(text: "Galeria", icon: Icon(Icons.photo_library)),
                         Tab(
@@ -150,15 +151,11 @@ class ItemDetail extends StatelessWidget {
               },
               body: TabBarView(
                 controller: tabController,
-                // physics: scrollController.hasClients &&
-                //         scrollController.offset > (370 - kToolbarHeight)
-                //     ? AlwaysScrollableScrollPhysics()
-                //     : NeverScrollableScrollPhysics(),
                 children: [
                   AboutUs(campDetails: campDetails),
                   Gallery(imgUrl: campDetails.image),
                   ReviewPage(),
-                  InfoPage(),
+                  const InfoPage(),
                 ],
               ),
             );
