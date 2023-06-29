@@ -1,8 +1,10 @@
 import 'package:camp_finder/app/core/constants/images.dart';
+import 'package:camp_finder/app/ui/app_routes.dart';
 
 class ModelServices {
   String? img;
   String? title;
+  String? route;
   String? subTitle;
   String? location;
   String? rating;
@@ -29,13 +31,17 @@ class ModelServices {
     this.distance,
     this.date,
     this.isSelected,
+    this.route,
   });
 }
 
 List<ModelServices> getTopServiceList() {
   List<ModelServices> list = [];
 
-  list.add(ModelServices(title: 'Camping', img: LSWashingClothes));
+  list.add(ModelServices(
+      title: 'Camping',
+      img: LSWashingClothes,
+      route: AppRoutes.CAMPING_TIPS_PAGE));
   list.add(ModelServices(title: 'Trekking', img: LSSweatshirt));
   list.add(ModelServices(title: '4x4', img: LSSuit));
   list.add(ModelServices(title: 'Motorhome', img: LSWashingMachine));

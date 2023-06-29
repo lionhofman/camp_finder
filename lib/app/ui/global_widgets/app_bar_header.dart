@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class AppBarHeader extends StatelessWidget {
+class AppBarHeader extends StatelessWidget implements PreferredSizeWidget {
   final bool? innerBoxIsScrolled;
-  const AppBarHeader({Key? key, this.innerBoxIsScrolled}) : super(key: key);
+
+  const AppBarHeader({
+    Key? key,
+    this.innerBoxIsScrolled,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,7 @@ class AppBarHeader extends StatelessWidget {
       automaticallyImplyLeading: false,
       titleSpacing: 0,
       backgroundColor: appColorPrimary,
-      actionsIconTheme: IconThemeData(opacity: 0.0),
+      actionsIconTheme: const IconThemeData(opacity: 0.0),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -80,7 +84,10 @@ class AppBarHeader extends StatelessWidget {
                 decoration: InputDecoration(
                   fillColor: white,
                   hintText: 'Search Laundry shop by name...',
-                  border: InputBorder.none,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none,
+                  ),
                   prefixIcon: Icon(Icons.search, color: grey),
                   contentPadding: EdgeInsets.only(
                       left: 24.0, bottom: 8.0, top: 8.0, right: 24.0),
@@ -93,4 +100,17 @@ class AppBarHeader extends StatelessWidget {
       ),
     );
   }
+
+  static AppBar simpleHeader({required String title}) {
+    return AppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () => Get.back(),
+      ),
+      title: Text(title),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

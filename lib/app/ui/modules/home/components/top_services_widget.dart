@@ -1,6 +1,7 @@
 import 'package:camp_finder/app/core/img_cache/img_cache_custom.dart';
 import 'package:camp_finder/app/ui/modules/home/model/model_services.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class TopServicesWidget extends StatelessWidget {
@@ -9,7 +10,7 @@ class TopServicesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 130,
+      height: 140,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: getTopServiceList().length,
@@ -18,6 +19,9 @@ class TopServicesWidget extends StatelessWidget {
 
           return InkWell(
             onTap: () {
+              if (data.route != null) {
+                Get.toNamed(data.route!);
+              }
               // ServiceDetail().launch(context);
             },
             child: Container(

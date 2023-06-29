@@ -1,11 +1,8 @@
-import 'package:camp_finder/app/core/constants/colors.dart';
 import 'package:camp_finder/app/ui/global_widgets/app_bar_header.dart';
 import 'package:camp_finder/app/ui/modules/showcases/highlights/showcase_highlights_widget.dart';
-import 'package:camp_finder/app/ui/modules/home/components/offer_service_widget.dart';
 import 'package:camp_finder/app/ui/modules/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 import 'components/top_services_widget.dart';
 
@@ -24,7 +21,9 @@ class HomePage extends GetView<HomeController> {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                AppBarHeader(innerBoxIsScrolled: innerBoxIsScrolled)
+                AppBarHeader(
+                  innerBoxIsScrolled: innerBoxIsScrolled,
+                )
               ];
             },
             body: CustomScrollView(
@@ -69,8 +68,8 @@ class HomePage extends GetView<HomeController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Melhores destinos para camping',
+                        const Text(
+                          'Campings imperdíveis',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
