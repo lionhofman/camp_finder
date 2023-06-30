@@ -1,46 +1,48 @@
-import 'package:camp_finder/app/core/constants/colors.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import 'package:camp_finder/app/core/constants/colors.dart';
+
 class AppBarHeader extends StatelessWidget implements PreferredSizeWidget {
   final bool? innerBoxIsScrolled;
-
+  final String? localization;
   const AppBarHeader({
     Key? key,
     this.innerBoxIsScrolled,
+    this.localization,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: 230,
-      floating: true,
+      expandedHeight: 180,
       forceElevated: innerBoxIsScrolled ?? false,
       pinned: true,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
       backgroundColor: appColorPrimary,
-      actionsIconTheme: const IconThemeData(opacity: 0.0),
+      toolbarHeight: 70,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Hello, Jhon', style: boldTextStyle(color: white, size: 20))
-              .paddingOnly(left: 16, right: 16, bottom: 8),
+          Text('Olá, Jhon', style: boldTextStyle(color: white, size: 18))
+              .paddingOnly(
+            left: 16,
+            right: 16,
+          ),
           IconButton(
               onPressed: () {
                 // LSNotificationScreen().launch(context);
               },
-              icon: Icon(Icons.notifications, color: white))
+              icon: const Icon(Icons.favorite, color: white))
         ],
       ),
       flexibleSpace: FlexibleSpaceBar(
         background: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Your Location',
-                    style: primaryTextStyle(color: white, size: 12))
-                .paddingOnly(left: 16, right: 16, top: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -48,33 +50,34 @@ class AppBarHeader extends StatelessWidget implements PreferredSizeWidget {
                   text: TextSpan(
                     children: [
                       WidgetSpan(
-                        child: Icon(Icons.location_on, color: white, size: 16)
+                        child: const Icon(Icons.location_on,
+                                color: white, size: 22)
                             .paddingRight(4),
                       ),
                       TextSpan(
-                          text: 'San Francisco',
+                          text: localization ?? "",
                           style: primaryTextStyle(color: white)),
                     ],
                   ),
                 ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      WidgetSpan(
-                        child: Icon(Icons.airplanemode_on_outlined,
-                                color: white, size: 16)
-                            .paddingRight(4),
-                      ),
-                      TextSpan(
-                          text: 'Change',
-                          style: primaryTextStyle(color: white)),
-                    ],
-                  ),
-                ),
+                // RichText(
+                //   text: TextSpan(
+                //     children: [
+                //       WidgetSpan(
+                //         child: Icon(Icons.airplanemode_on_outlined,
+                //                 color: white, size: 16)
+                //             .paddingRight(4),
+                //       ),
+                //       TextSpan(
+                //           text: 'Change',
+                //           style: primaryTextStyle(color: white)),
+                //     ],
+                //   ),
+                // ),
               ],
-            ).paddingAll(16),
+            ).paddingOnly(left: 16, bottom: 4),
             Container(
-              margin: EdgeInsets.all(16),
+              margin: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   color: context.scaffoldBackgroundColor),

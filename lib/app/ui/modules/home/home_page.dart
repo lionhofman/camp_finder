@@ -21,9 +21,10 @@ class HomePage extends GetView<HomeController> {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                AppBarHeader(
-                  innerBoxIsScrolled: innerBoxIsScrolled,
-                )
+                Obx(() => AppBarHeader(
+                      innerBoxIsScrolled: innerBoxIsScrolled,
+                      localization: controller.userLocation,
+                    ))
               ];
             },
             body: CustomScrollView(
