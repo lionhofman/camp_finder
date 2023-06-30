@@ -33,7 +33,7 @@ class RootController extends GetxController {
   }
 
   List<Widget> get pages => _pages;
-  bool get isLoggedIn => _isLoggedIn.value;
+  RxBool get isLoggedIn => _isLoggedIn;
   int get previousIndex => _previousIndex.value;
   int get currentIndex => _currentIndex.value;
   AuthStore get authStore => _authStore;
@@ -86,6 +86,6 @@ class RootController extends GetxController {
   }
 
   isShowIconLogin() {
-    _isLoggedIn.value = authStore.isLoggedIn;
+    _isLoggedIn = authStore.isLoggedIn;
   }
 }

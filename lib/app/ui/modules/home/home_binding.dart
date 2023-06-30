@@ -1,3 +1,4 @@
+import 'package:camp_finder/app/ui/modules/auth/store/auth_store.dart';
 import 'package:camp_finder/app/ui/modules/camping/camping_binding.dart';
 import 'package:camp_finder/app/ui/modules/home/controller/home_controller.dart';
 import 'package:camp_finder/app/ui/modules/showcases/highlights/showcase_highlights_binding.dart';
@@ -8,6 +9,8 @@ class HomeBinding implements Bindings {
   void dependencies() {
     CampingBinding().dependencies();
     ShowcaseHighlightsBinding().dependencies();
-    Get.lazyPut<HomeController>(() => HomeController());
+    Get.lazyPut<HomeController>(() => HomeController(
+          Get.find<AuthStore>(),
+        ));
   }
 }

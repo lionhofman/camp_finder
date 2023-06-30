@@ -4,14 +4,17 @@ import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'package:camp_finder/app/core/constants/colors.dart';
+import 'package:camp_finder/app/ui/modules/auth/store/auth_store.dart';
 
 class AppBarHeader extends StatelessWidget implements PreferredSizeWidget {
   final bool? innerBoxIsScrolled;
   final String? localization;
+  final AuthStore authStore;
   const AppBarHeader({
     Key? key,
     this.innerBoxIsScrolled,
     this.localization,
+    required this.authStore,
   }) : super(key: key);
 
   @override
@@ -27,8 +30,14 @@ class AppBarHeader extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Olá, Jhon', style: boldTextStyle(color: white, size: 18))
-              .paddingOnly(
+          Obx(() {
+            return Text(
+              authStore.isLoggedIn.value
+                  ? 'Olá, ${authStore.firstName}'
+                  : 'Olá, seja bem vindo !',
+              style: boldTextStyle(color: white, size: 18),
+            );
+          }).paddingOnly(
             left: 16,
             right: 16,
           ),

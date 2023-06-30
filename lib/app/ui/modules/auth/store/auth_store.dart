@@ -5,6 +5,10 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class AuthStore extends GetxController {
+  RxBool _isLoggedIn = false.obs;
+  RxnString _userName = RxnString();
+  RxString _firstName = "".obs;
+
   /// Save the user data on the internal database.
   Future<void> setCustomer(Customer? customer) async {
     if (customer == null) {
@@ -13,6 +17,21 @@ class AuthStore extends GetxController {
     Box<Customer> boxCustomer = await HiveDbService.instance.customerHiveBox;
     await boxCustomer.clear();
     await boxCustomer.add(customer);
+    _isLoggedIn.value = true;
+    setUpUser();
+  }
+
+  setUpUser() async {
+    Customer? customer = await getCustomer();
+    _userName.value = customer != null ? customer.name : "";
+    getFirstName(_userName.value);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    _isLoggedIn.value = userCustomer != null;
+    setUpUser();
   }
 
   /// Returns the user data if exists, otherwise returns null;
@@ -40,11 +59,19 @@ class AuthStore extends GetxController {
         .put(LocalStorageConstants.UID_HIVE_BOX, null);
   }
 
+  void getFirstName(String? fullName) {
+    if (fullName != null) {
+      _firstName.value = fullName.split(' ')[0];
+    }
+  }
+
   setUserUID(String value) => HiveDbService.instance.uidHiveBox
       .put(LocalStorageConstants.UID_HIVE_BOX, value);
 
   String? get userCustomer =>
       HiveDbService.instance.uidHiveBox.get(LocalStorageConstants.UID_HIVE_BOX);
 
-  bool get isLoggedIn => userCustomer != null;
+  RxBool get isLoggedIn => _isLoggedIn;
+  RxnString get userName => _userName;
+  RxString get firstName => _firstName;
 }

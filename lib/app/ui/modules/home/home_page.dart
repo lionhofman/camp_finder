@@ -24,14 +24,15 @@ class HomePage extends GetView<HomeController> {
                 Obx(() => AppBarHeader(
                       innerBoxIsScrolled: innerBoxIsScrolled,
                       localization: controller.userLocation,
+                      authStore: controller.authStore,
                     ))
               ];
             },
             body: CustomScrollView(
               slivers: <Widget>[
-                SliverToBoxAdapter(
+                const SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: EdgeInsets.all(16.0),
                     child: Text(
                       'Dicas',
                       style:

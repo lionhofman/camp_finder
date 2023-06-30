@@ -50,11 +50,11 @@ class BottomBar extends GetView<RootController> {
                                 .white, // Define a cor do CircularProgressIndicator para branco.
                           )
                         : Obx(() => IconButton(
-                              icon: Icon(controller.isLoggedIn
+                              icon: Icon(controller.isLoggedIn.value
                                   ? Icons.logout
                                   : Icons.person),
                               onPressed: () {
-                                if (controller.isLoggedIn) {
+                                if (controller.isLoggedIn.value) {
                                   controller.logout();
                                 } else {
                                   controller.changePage(
