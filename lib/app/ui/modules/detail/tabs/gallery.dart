@@ -4,8 +4,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Gallery extends StatelessWidget {
-  final String imgUrl;
-  Gallery({super.key, required this.imgUrl});
+  final String? imgUrl;
+  Gallery({super.key, this.imgUrl});
 
   final List<String> videoIds = [
     'v5mrdehPOEE',

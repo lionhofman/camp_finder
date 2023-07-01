@@ -1,5 +1,5 @@
 import 'package:camp_finder/app/core/img_cache/img_cache_custom.dart';
-import 'package:camp_finder/app/ui/modules/detail/item_detail.dart';
+import 'package:camp_finder/app/ui/app_routes.dart';
 import 'package:camp_finder/app/ui/modules/showcases/highlights/controller/showcase_highlights_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,9 +22,8 @@ class ShowcaseHighlightsWidget extends GetView<ShowcaseHighlightsController> {
               return InkWell(
                 borderRadius: BorderRadius.circular(8),
                 onTap: () {
-                  ItemDetail(
-                    campDetails: controller.listCamps[index]!,
-                  ).launch(context);
+                  Get.toNamed(AppRoutes.DETAILS_PAGE,
+                      arguments: controller.listCamps[index]!);
                 },
                 child: Container(
                   width: Get.width * 0.62,

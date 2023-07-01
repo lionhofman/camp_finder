@@ -11,87 +11,91 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () async {
-            // Implementar a lógica de atualização de conteúdo aqui
-          },
-          child: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                Obx(() => AppBarHeader(
-                      innerBoxIsScrolled: innerBoxIsScrolled,
-                      localization: controller.userLocation,
-                      authStore: controller.authStore,
-                    ))
-              ];
-            },
-            body: CustomScrollView(
-              slivers: <Widget>[
-                const SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'Dicas',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                    ),
-                  ),
-                ),
-                SliverToBoxAdapter(child: const TopServicesWidget()),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Em destaque',
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          body: SafeArea(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                // Implementar a lógica de atualização de conteúdo aqui
+              },
+              child: NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    Obx(() => AppBarHeader(
+                          innerBoxIsScrolled: innerBoxIsScrolled,
+                          localization: controller.userLocation,
+                          authStore: controller.authStore,
+                        ))
+                  ];
+                },
+                body: CustomScrollView(
+                  slivers: <Widget>[
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text(
+                          'Dicas',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            // LSNearByScreen().launch(context);
-                          },
-                          child: Text('View All',
-                              style: TextStyle(color: Colors.blue)),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                SliverToBoxAdapter(child: ShowcaseHighlightsWidget()),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Campings imperdíveis',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                    SliverToBoxAdapter(child: const TopServicesWidget()),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Em destaque',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // LSNearByScreen().launch(context);
+                              },
+                              child: Text('View All',
+                                  style: TextStyle(color: Colors.blue)),
+                            ),
+                          ],
                         ),
-                        TextButton(
-                          onPressed: () {
-                            // LSOfferAllScreen().launch(context);
-                          },
-                          child: Text('View All',
-                              style: TextStyle(color: Colors.blue)),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    SliverToBoxAdapter(child: ShowcaseHighlightsWidget()),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Campings imperdíveis',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // LSOfferAllScreen().launch(context);
+                              },
+                              child: Text('View All',
+                                  style: TextStyle(color: Colors.blue)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(child: const ShowcaseHighlightsWidget()),
+                  ],
                 ),
-                SliverToBoxAdapter(child: const ShowcaseHighlightsWidget()),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

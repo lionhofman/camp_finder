@@ -2,6 +2,7 @@ import 'package:camp_finder/app/ui/global_widgets/bottom_navigation/root_binding
 import 'package:camp_finder/app/ui/global_widgets/bottom_navigation/root_page.dart';
 import 'package:camp_finder/app/ui/modules/camping/camping_binding.dart';
 import 'package:camp_finder/app/ui/modules/camping/camping_page.dart';
+import 'package:camp_finder/app/ui/modules/detail/item_detail_binding.dart';
 import 'package:camp_finder/app/ui/modules/forgot_password/forgot_password_binding.dart';
 import 'package:camp_finder/app/ui/modules/forgot_password/forgot_password_page.dart';
 import 'package:camp_finder/app/ui/modules/home/home_binding.dart';
@@ -15,6 +16,7 @@ import 'package:camp_finder/app/ui/modules/tips/camping/camping_tips_page.dart';
 import 'package:get/get.dart';
 
 import 'app_routes.dart';
+import 'modules/detail/item_detail.dart';
 
 class AppPages {
   static final pages = [
@@ -58,6 +60,12 @@ class AppPages {
       name: AppRoutes.CAMPING_TIPS_PAGE,
       page: () => CampingTipsPage(),
       binding: CampingTipsBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.DETAILS_PAGE,
+      page: () => ItemDetail(),
+      binding: ItemDetailBinding(),
       transition: Transition.cupertino,
     ),
   ];

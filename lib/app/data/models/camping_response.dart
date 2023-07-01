@@ -1,4 +1,5 @@
 import 'package:camp_finder/app/domain/entities/camping.dart';
+import 'package:get/get.dart';
 
 class CampingResponse extends Camping {
   CampingResponse({
@@ -19,10 +20,19 @@ class CampingResponse extends Camping {
     required super.updateDate,
   });
   factory CampingResponse.fromFirestore(Map<String, dynamic> data) {
+    String nameCamping = data['name_camping'];
+    if (nameCamping.isNotEmpty) {
+      nameCamping = nameCamping.capitalize!;
+    }
+
+    String title = data['title'];
+    if (title.isNotEmpty) {
+      title = title.capitalize!;
+    }
     return CampingResponse(
       code: data['code'],
-      nameCamping: data['name_camping'] ?? '',
-      title: data['title'] ?? '',
+      nameCamping: nameCamping,
+      title: title,
       image: data['image'] ?? '',
       position: data['position'] != null
           ? Map<String, dynamic>.from(data['position'])

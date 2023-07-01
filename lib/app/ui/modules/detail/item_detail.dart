@@ -1,16 +1,18 @@
 import 'package:camp_finder/app/core/constants/colors.dart';
-import 'package:camp_finder/app/domain/entities/camping.dart';
+import 'package:camp_finder/app/ui/modules/detail/controller/item_detail_controller.dart';
 import 'package:camp_finder/app/ui/modules/detail/tabs/about_us.dart';
 import 'package:camp_finder/app/ui/modules/detail/tabs/gallery.dart';
 import 'package:camp_finder/app/ui/modules/detail/tabs/info_page.dart';
 import 'package:camp_finder/app/ui/modules/detail/tabs/reviews_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class ItemDetail extends StatelessWidget {
-  final Camping campDetails;
-  const ItemDetail({Key? key, required this.campDetails}) : super(key: key);
+class ItemDetail extends GetView<ItemDetailController> {
+  const ItemDetail({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +21,6 @@ class ItemDetail extends StatelessWidget {
         length: 4,
         child: Builder(
           builder: (BuildContext context) {
-            final TabController tabController =
-                DefaultTabController.of(context);
-            final ScrollController scrollController =
-                PrimaryScrollController.of(context);
             return NestedScrollView(
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
@@ -45,9 +43,13 @@ class ItemDetail extends StatelessWidget {
                       background: Stack(
                         fit: StackFit.expand,
                         children: <Widget>[
-                          Image.network(campDetails.image, fit: BoxFit.cover),
+                          controller.campingDetail.value?.image != null
+                              ? Image.network(
+                                  controller.campingDetail.value!.image,
+                                  fit: BoxFit.cover)
+                              : Container(),
                           DecoratedBox(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [Color(0x60000000), Color(0x00000000)],
                                 stops: [0.0, 0.75],
@@ -59,7 +61,7 @@ class ItemDetail extends StatelessWidget {
                               padding: const EdgeInsets.all(20.0),
                               child: Column(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 200,
                                   ),
                                   Row(
@@ -70,12 +72,16 @@ class ItemDetail extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(campDetails.title,
-                                              style: TextStyle(
+                                          Text(
+                                              controller
+                                                  .campingDetail.value!.title,
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 30)),
-                                          Text(campDetails.address,
-                                              style: TextStyle(
+                                          Text(
+                                              controller
+                                                  .campingDetail.value!.address,
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 18)),
                                           Row(
@@ -86,7 +92,7 @@ class ItemDetail extends StatelessWidget {
                                                 disable: true,
                                                 onRatingChanged: (aRating) {},
                                               ),
-                                              SizedBox(width: 4),
+                                              const SizedBox(width: 4),
                                               Text('(90 Reviews)',
                                                   style: secondaryTextStyle(
                                                       color: white)),
@@ -101,11 +107,11 @@ class ItemDetail extends StatelessWidget {
                                           Text('0.2 Km Away',
                                               style: secondaryTextStyle(
                                                   color: white)),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 8,
                                           ),
                                           Container(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 horizontal: 8, vertical: 6),
                                             decoration:
                                                 boxDecorationWithRoundedCorners(
@@ -150,10 +156,10 @@ class ItemDetail extends StatelessWidget {
                 ];
               },
               body: TabBarView(
-                controller: tabController,
+                controller: DefaultTabController.of(context),
                 children: [
-                  AboutUs(campDetails: campDetails),
-                  Gallery(imgUrl: campDetails.image),
+                  AboutUs(campDetails: controller.campingDetail.value),
+                  Gallery(imgUrl: controller.campingDetail.value!.image),
                   ReviewPage(),
                   const InfoPage(),
                 ],

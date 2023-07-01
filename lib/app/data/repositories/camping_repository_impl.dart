@@ -26,4 +26,16 @@ class CampingRepositoryImpl implements CampingRepository {
       return Left(e);
     }
   }
+
+  @override
+  Future<Either<Exception, List<Camping?>>> getAutoCompleteList(
+      {required String keyword}) async {
+    try {
+      var campings =
+          await _campingsRemoteDataSource.getAutoCompleteList(keyword: keyword);
+      return Right(campings);
+    } on Exception catch (e) {
+      return Left(e);
+    }
+  }
 }

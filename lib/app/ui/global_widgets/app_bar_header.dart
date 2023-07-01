@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:camp_finder/app/ui/modules/search/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -85,28 +86,7 @@ class AppBarHeader extends StatelessWidget implements PreferredSizeWidget {
                 // ),
               ],
             ).paddingOnly(left: 16, bottom: 4),
-            Container(
-              margin: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  color: context.scaffoldBackgroundColor),
-              child: AppTextField(
-                textFieldType: TextFieldType.NAME,
-                textAlignVertical: TextAlignVertical.center,
-                decoration: InputDecoration(
-                  fillColor: white,
-                  hintText: 'Search Laundry shop by name...',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide.none,
-                  ),
-                  prefixIcon: Icon(Icons.search, color: grey),
-                  contentPadding: EdgeInsets.only(
-                      left: 24.0, bottom: 8.0, top: 8.0, right: 24.0),
-                ),
-              ),
-              alignment: Alignment.center,
-            ),
+            const Expanded(child: SearchPage()),
           ],
         ).paddingTop(70),
       ),

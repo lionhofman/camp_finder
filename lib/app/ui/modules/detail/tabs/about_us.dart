@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class AboutUs extends StatefulWidget {
-  final Camping campDetails;
-  const AboutUs({Key? key, required this.campDetails}) : super(key: key);
+  final Camping? campDetails;
+  const AboutUs({Key? key, this.campDetails}) : super(key: key);
 
   @override
   State<AboutUs> createState() => _AboutUsState();
@@ -29,7 +29,7 @@ class _AboutUsState extends State<AboutUs> {
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               Text(
-                widget.campDetails.about,
+                widget.campDetails != null ? widget.campDetails!.about : "",
                 style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
               const SizedBox(height: 20),
@@ -37,7 +37,7 @@ class _AboutUsState extends State<AboutUs> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               Text(
-                widget.campDetails.address,
+                widget.campDetails != null ? widget.campDetails!.address : "",
                 style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
               const SizedBox(height: 10),

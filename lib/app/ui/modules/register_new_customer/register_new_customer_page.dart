@@ -1,7 +1,6 @@
 import 'package:camp_finder/app/ui/app_routes.dart';
 import 'package:camp_finder/app/ui/modules/input/widgets/custom_input_button.dart';
 import 'package:camp_finder/app/ui/modules/input/widgets/custom_input_text.dart';
-import 'package:camp_finder/app/ui/modules/login/widgets/login_square_tile.dart';
 import 'package:camp_finder/app/ui/modules/register_new_customer/controller/register_new_customer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
