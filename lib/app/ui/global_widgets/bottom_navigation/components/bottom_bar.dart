@@ -32,7 +32,10 @@ class BottomBar extends GetView<RootController> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.list),
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.changePage(
+                        PageConstants.BOTTOM_BAR_INDEX_REGISTER_CAMPING);
+                  },
                 ),
                 const SizedBox(
                   width: 60,

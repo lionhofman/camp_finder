@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:camp_finder/app/core/custom/snackbar_custom.dart';
+import 'package:camp_finder/app/ui/modules/camping_register/camping_register_page.dart';
 import 'package:camp_finder/app/ui/modules/login/contoller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,6 +30,7 @@ class RootController extends GetxController {
       const HomePage(),
       CampingPage(),
       const LoginPage(),
+      const CampingRegisterPage(),
     ];
   }
 
