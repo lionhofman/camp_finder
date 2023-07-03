@@ -6,6 +6,9 @@ class DB {
   static final DB _instance = DB._();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static const String DB_CAMP_NAME = 'camps';
+  static const String DB_OPEN_HOURS_NAME = 'open_hours';
+  static const String DB_GALLERY_NAME = 'gallery';
+  static const String DB_ADD_INFO_NAME = 'additional_info';
   static const String DB_USER_NAME = 'users';
   static get() {
     return DB._instance._firestore;
@@ -319,7 +322,7 @@ class DB {
     ];
 
     /**Teste */
-    // var campingDocument = await firestore.collection('camp_teste').doc();
+    // var campingDocument = await firestore.collection('camps').doc();
     // campingDocument.set(dados[0]);
     // // await firestore.collection('camps').add(dados[0]);
     // openHours.forEach((openHour) async {
@@ -327,6 +330,9 @@ class DB {
     // });
     // gallery.forEach((galleryItem) async {
     //   await campingDocument.collection('gallery').add(galleryItem);
+    // });
+    // additionalInfo.forEach((info) async {
+    //   await campingDocument.collection('additional_info').add(info);
     // });
     // campingDocument = await firestore.collection('camp_teste').doc();
     // campingDocument.set(dados[1]);

@@ -1,3 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:camp_finder/app/domain/entities/additional_info.dart';
+import 'package:camp_finder/app/domain/entities/gallery_item.dart';
+import 'package:camp_finder/app/domain/entities/open_hour.dart';
+
 class Camping {
   final int code;
   final String title;
@@ -14,6 +19,9 @@ class Camping {
   final DateTime updateDate;
   final String image;
   Map<String, dynamic> position;
+  final List<OpenHour> openHours;
+  final List<GalleryItem> gallery;
+  final List<AdditionalInfo> additionalInfo;
 
   Camping({
     required this.code,
@@ -31,5 +39,8 @@ class Camping {
     required this.updateDate,
     required this.image,
     required this.position,
+    required this.openHours,
+    required this.gallery,
+    required this.additionalInfo,
   });
 }

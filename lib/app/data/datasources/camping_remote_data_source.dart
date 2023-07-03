@@ -1,6 +1,12 @@
 import 'package:camp_finder/app/data/database/db.dart';
+import 'package:camp_finder/app/data/models/additional_info_response.dart';
 import 'package:camp_finder/app/data/models/camping_response.dart';
+import 'package:camp_finder/app/data/models/gallery_item_response.dart';
+import 'package:camp_finder/app/data/models/open_hour_response.dart';
+import 'package:camp_finder/app/domain/entities/additional_info.dart';
 import 'package:camp_finder/app/domain/entities/camping.dart';
+import 'package:camp_finder/app/domain/entities/gallery_item.dart';
+import 'package:camp_finder/app/domain/entities/open_hour.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class CampingRemoteDataSource {
@@ -23,11 +29,58 @@ class CampingRemoteDataSourceImpl implements CampingRemoteDataSource {
     List<Camping?> campingsList = [];
 
     await collection.get().then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        campingsList.add(CampingResponse.fromFirestore(doc.data()));
+      querySnapshot.docs.forEach((doc) async {
+        Map<String, dynamic> campingData = doc.data();
+        //OpenHours
+        List<OpenHour> openHours = await getOpenHourList(doc);
+        //Gallery
+        List<GalleryItem> galleryItemList = await getGalleryItemList(doc);
+        //AdditionalInfo
+        List<AdditionalInfo> additionalInfoList =
+            await getAdditionalInfoList(doc);
+        campingData.addAll({
+          DB.DB_OPEN_HOURS_NAME: openHours,
+          DB.DB_GALLERY_NAME: galleryItemList,
+          DB.DB_ADD_INFO_NAME: additionalInfoList,
+        });
+        campingsList.add(CampingResponse.fromFirestore(campingData));
       });
     });
     return campingsList;
+  }
+
+  Future<List<OpenHour>> getOpenHourList(
+      QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
+    List<OpenHour> openHours = [];
+    await doc.reference.collection(DB.DB_OPEN_HOURS_NAME).get().then((value) {
+      value.docs.forEach((doc) async {
+        openHours.add(OpenHourResponse.fromFirestore(doc.data()));
+      });
+    });
+    return openHours;
+  }
+
+  Future<List<GalleryItem>> getGalleryItemList(
+      QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
+    List<GalleryItem> galleryItemList = [];
+    await doc.reference.collection(DB.DB_GALLERY_NAME).get().then((value) {
+      value.docs.forEach((doc) async {
+        galleryItemList.add(GalleryItemResponse.fromFirestore(doc.data()));
+      });
+    });
+    return galleryItemList;
+  }
+
+  Future<List<AdditionalInfo>> getAdditionalInfoList(
+      QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
+    List<AdditionalInfo> additionalInfoList = [];
+    await doc.reference.collection(DB.DB_ADD_INFO_NAME).get().then((value) {
+      value.docs.forEach((doc) async {
+        additionalInfoList
+            .add(AdditionalInfoResponse.fromFirestore(doc.data()));
+      });
+    });
+    return additionalInfoList;
   }
 
   @override
@@ -42,8 +95,21 @@ class CampingRemoteDataSourceImpl implements CampingRemoteDataSource {
         .limit(qty)
         .get()
         .then((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        campingsList.add(CampingResponse.fromFirestore(doc.data()));
+      querySnapshot.docs.forEach((doc) async {
+        Map<String, dynamic> campingData = doc.data();
+        //OpenHours
+        List<OpenHour> openHours = await getOpenHourList(doc);
+        //Gallery
+        List<GalleryItem> galleryItemList = await getGalleryItemList(doc);
+        //AdditionalInfo
+        List<AdditionalInfo> additionalInfoList =
+            await getAdditionalInfoList(doc);
+        campingData.addAll({
+          DB.DB_OPEN_HOURS_NAME: openHours,
+          DB.DB_GALLERY_NAME: galleryItemList,
+          DB.DB_ADD_INFO_NAME: additionalInfoList,
+        });
+        campingsList.add(CampingResponse.fromFirestore(campingData));
       });
     });
 
