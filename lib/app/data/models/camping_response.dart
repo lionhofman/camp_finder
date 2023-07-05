@@ -21,9 +21,9 @@ class CampingResponse extends Camping {
     super.website,
     super.whatsapp,
     required super.updateDate,
-    required super.openHours,
-    required super.gallery,
-    required super.additionalInfo,
+    super.openHours,
+    super.gallery,
+    super.additionalInfo,
   });
   factory CampingResponse.fromFirestore(Map<String, dynamic> data) {
     String nameCamping = data['name_camping'];
@@ -69,9 +69,9 @@ class CampingResponse extends Camping {
       trekkingDescription: data['trekking'],
       website: data['website'],
       updateDate: data['updateDate'] ?? DateTime.now(),
-      additionalInfo: additionalInfoList,
-      gallery: galleryList,
-      openHours: openHoursList,
+      additionalInfo: additionalInfoList.isNotEmpty ? additionalInfoList : null,
+      gallery: galleryList.isNotEmpty ? galleryList : null,
+      openHours: openHoursList.isNotEmpty ? openHoursList : null,
     );
   }
 

@@ -19,9 +19,9 @@ class Camping {
   final DateTime updateDate;
   final String image;
   Map<String, dynamic> position;
-  final List<OpenHour> openHours;
-  final List<GalleryItem> gallery;
-  final List<AdditionalInfo> additionalInfo;
+  final List<OpenHour>? openHours;
+  final List<GalleryItem>? gallery;
+  final List<AdditionalInfo>? additionalInfo;
 
   Camping({
     required this.code,
@@ -39,8 +39,8 @@ class Camping {
     required this.updateDate,
     required this.image,
     required this.position,
-    required this.openHours,
-    required this.gallery,
-    required this.additionalInfo,
+    this.openHours,
+    this.gallery,
+    this.additionalInfo,
   });
 }

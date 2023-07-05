@@ -30,20 +30,7 @@ class CampingRemoteDataSourceImpl implements CampingRemoteDataSource {
 
     await collection.get().then((querySnapshot) {
       querySnapshot.docs.forEach((doc) async {
-        Map<String, dynamic> campingData = doc.data();
-        //OpenHours
-        List<OpenHour> openHours = await getOpenHourList(doc);
-        //Gallery
-        List<GalleryItem> galleryItemList = await getGalleryItemList(doc);
-        //AdditionalInfo
-        List<AdditionalInfo> additionalInfoList =
-            await getAdditionalInfoList(doc);
-        campingData.addAll({
-          DB.DB_OPEN_HOURS_NAME: openHours,
-          DB.DB_GALLERY_NAME: galleryItemList,
-          DB.DB_ADD_INFO_NAME: additionalInfoList,
-        });
-        campingsList.add(CampingResponse.fromFirestore(campingData));
+        campingsList.add(await getCampingResponse(doc));
       });
     });
     return campingsList;
@@ -90,30 +77,32 @@ class CampingRemoteDataSourceImpl implements CampingRemoteDataSource {
 
   Future<List<Camping?>> handleLimitToLastRequest({required int qty}) async {
     List<Camping?> campingsList = [];
-    await collection
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await collection
         .orderBy('update_date', descending: true)
         .limit(qty)
-        .get()
-        .then((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
-      querySnapshot.docs.forEach((doc) async {
-        Map<String, dynamic> campingData = doc.data();
-        //OpenHours
-        List<OpenHour> openHours = await getOpenHourList(doc);
-        //Gallery
-        List<GalleryItem> galleryItemList = await getGalleryItemList(doc);
-        //AdditionalInfo
-        List<AdditionalInfo> additionalInfoList =
-            await getAdditionalInfoList(doc);
-        campingData.addAll({
-          DB.DB_OPEN_HOURS_NAME: openHours,
-          DB.DB_GALLERY_NAME: galleryItemList,
-          DB.DB_ADD_INFO_NAME: additionalInfoList,
-        });
-        campingsList.add(CampingResponse.fromFirestore(campingData));
-      });
-    });
+        .get();
 
+    for (var doc in querySnapshot.docs) {
+      campingsList.add(await getCampingResponse(doc));
+    }
     return campingsList;
+  }
+
+  Future<CampingResponse> getCampingResponse(
+      QueryDocumentSnapshot<Map<String, dynamic>> doc) async {
+    Map<String, dynamic> campingData = doc.data();
+    //OpenHours
+    List<OpenHour> openHours = await getOpenHourList(doc);
+    //Gallery
+    List<GalleryItem> galleryItemList = await getGalleryItemList(doc);
+    //AdditionalInfo
+    List<AdditionalInfo> additionalInfoList = await getAdditionalInfoList(doc);
+    campingData.addAll({
+      DB.DB_OPEN_HOURS_NAME: openHours,
+      DB.DB_GALLERY_NAME: galleryItemList,
+      DB.DB_ADD_INFO_NAME: additionalInfoList,
+    });
+    return CampingResponse.fromFirestore(campingData);
   }
 
   @override
@@ -125,36 +114,36 @@ class CampingRemoteDataSourceImpl implements CampingRemoteDataSource {
       {required String keyword}) async {
     List<Camping?> campingsList = [];
 
-    await collection
+    //search name_camping
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await collection
         .orderBy(
             'name_camping') // depois, ordena a consulta pelo campo 'name_camping'
         .startAt([
-          keyword,
-        ]) // começa a consulta em 'name_camping'
+      keyword,
+    ]) // começa a consulta em 'name_camping'
         .endAt([
-          keyword + '\uf8ff',
-        ]) // termina a consulta em 'name_camping'
-        .get()
-        .then((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
-          querySnapshot.docs.forEach((doc) {
-            campingsList.add(CampingResponse.fromFirestore(doc.data()));
-          });
-        });
+      keyword + '\uf8ff',
+    ]) // termina a consulta em 'name_camping'
+        .get();
 
-    await collection
+    for (var doc in querySnapshot.docs) {
+      campingsList.add(await getCampingResponse(doc));
+    }
+
+    //search title
+    QuerySnapshot<Map<String, dynamic>> querySnapshotTitle = await collection
         .orderBy('title') // depois, ordena a consulta pelo campo 'title'
         .startAt([
-          keyword,
-        ]) // começa a consulta em 'title'
+      keyword,
+    ]) // começa a consulta em 'title'
         .endAt([
-          keyword + '\uf8ff',
-        ]) // termina a consulta em 'title'
-        .get()
-        .then((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
-          querySnapshot.docs.forEach((doc) {
-            campingsList.add(CampingResponse.fromFirestore(doc.data()));
-          });
-        });
+      keyword + '\uf8ff',
+    ]) // termina a consulta em 'title'
+        .get();
+
+    for (var docTitle in querySnapshotTitle.docs) {
+      campingsList.add(await getCampingResponse(docTitle));
+    }
     return campingsList;
   }
 }
