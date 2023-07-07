@@ -71,17 +71,31 @@ class _AboutUsState extends State<AboutUs> {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text('Opening Hours',
+              const Text('Horário de funcionamento',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
-              for (var day in ['Monday', 'Tuesday', 'Friday'])
-                ListTile(
-                  leading: const Icon(Icons.access_time, color: Colors.black54),
-                  title: Text(
-                    '$day: 08:00 AM - 08:00 PM',
-                    style: TextStyle(color: Colors.black87),
-                  ),
-                ),
+              ListView.builder(
+                itemCount: widget.campDetails!.openHours != null
+                    ? widget.campDetails!.openHours!.length
+                    : 0,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("${widget.campDetails!.openHours![index].day}:",
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold)),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Text(widget.campDetails!.openHours![index].hours,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.w100)),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ],
           ),
         ),
