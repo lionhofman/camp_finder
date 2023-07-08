@@ -16,6 +16,14 @@ class ItemDetail extends GetView<ItemDetailController> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> tabs = [
+      const Tab(text: "Sobre", icon: Icon(Icons.my_location)),
+      if (controller.campingDetail.value!.gallery != null &&
+          controller.campingDetail.value!.gallery!.isNotEmpty)
+        const Tab(text: "Galeria", icon: Icon(Icons.photo_library)),
+      const Tab(text: "Reviews", icon: FaIcon(FontAwesomeIcons.commentDots)),
+      const Tab(text: "Mais info", icon: Icon(Icons.info)),
+    ];
     return Scaffold(
       body: DefaultTabController(
         length: 4,
@@ -143,14 +151,7 @@ class ItemDetail extends GetView<ItemDetailController> {
                       indicatorWeight: 5,
                       indicatorColor: Colors.white,
                       labelStyle: boldTextStyle(color: black),
-                      tabs: const [
-                        Tab(text: "Sobre", icon: Icon(Icons.my_location)),
-                        Tab(text: "Galeria", icon: Icon(Icons.photo_library)),
-                        Tab(
-                            text: "Reviews",
-                            icon: FaIcon(FontAwesomeIcons.commentDots)),
-                        Tab(text: "Mais info", icon: Icon(Icons.info)),
-                      ],
+                      tabs: tabs,
                     ),
                   ),
                 ];
@@ -159,7 +160,9 @@ class ItemDetail extends GetView<ItemDetailController> {
                 controller: DefaultTabController.of(context),
                 children: [
                   AboutUs(campDetails: controller.campingDetail.value),
-                  Gallery(imgUrl: controller.campingDetail.value!.image),
+                  if (controller.campingDetail.value!.gallery != null &&
+                      controller.campingDetail.value!.gallery!.isNotEmpty)
+                    Gallery(gallery: controller.campingDetail.value!.gallery),
                   ReviewPage(),
                   const InfoPage(),
                 ],

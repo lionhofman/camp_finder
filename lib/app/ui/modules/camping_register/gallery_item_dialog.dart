@@ -19,29 +19,12 @@ class _GalleryItemDialogState extends State<GalleryItemDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          DropdownButton<String>(
-            value: type,
-            items: [
-              'photo',
-              'video',
-            ].map((type) {
-              return DropdownMenuItem<String>(
-                value: type,
-                child: Text(type),
-              );
-            }).toList(),
-            onChanged: (value) {
-              setState(() {
-                type = value;
-              });
-            },
-            hint: Text('Escolha o tipo (photo/video)'),
-          ),
+          Text("Insira uma URL de Video ou de Foto"),
           TextFormField(
             controller: urlInputController,
             decoration: InputDecoration(
-              hintText: 'Insira a URL',
-              prefixText: 'https://',
+              hintText: 'https:// ',
+              // prefixText: 'https://',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -60,13 +43,15 @@ class _GalleryItemDialogState extends State<GalleryItemDialog> {
         TextButton(
           child: Text('Adicionar'),
           onPressed: () {
-            if (type != null && urlInputController.text.isNotEmpty) {
+            if (urlInputController.text.isNotEmpty) {
+              String url = 'https://' + urlInputController.text;
+              String type = url.contains('youtube') ? 'video' : 'photo';
               Navigator.of(context).pop({
-                'type': type!,
-                'url': 'https://' + urlInputController.text,
+                'type': type,
+                'url': url,
               });
             } else {
-              print('Type and URL must be provided');
+              print('URL must be provided');
             }
           },
         ),

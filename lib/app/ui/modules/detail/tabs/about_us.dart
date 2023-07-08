@@ -25,7 +25,7 @@ class _AboutUsState extends State<AboutUs> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Divider(thickness: 1, color: Colors.grey),
-              const Text('About Us',
+              const Text('Detalhes do local',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               Text(
@@ -33,7 +33,7 @@ class _AboutUsState extends State<AboutUs> {
                 style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
               const SizedBox(height: 20),
-              const Text('Address',
+              const Text('Endereço',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               Text(

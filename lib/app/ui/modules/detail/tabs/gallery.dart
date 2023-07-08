@@ -1,36 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import 'package:camp_finder/app/domain/entities/gallery_item.dart';
+
 class Gallery extends StatelessWidget {
-  final String? imgUrl;
-  Gallery({super.key, this.imgUrl});
+  final List<GalleryItem>? gallery;
 
-  final List<String> videoIds = [
-    'v5mrdehPOEE',
-    'QViR02CMU9Y',
-    'v5mrdehPOEE',
-  ];
-
-  final List<Media> mediaList = [
-    Media(
-        type: MediaType.photo,
-        url:
-            'https://lh5.googleusercontent.com/p/AF1QipP7pI743huWwGuTibSIxDfxzDWRDAktochXzvb9=w426-h240-k-no'),
-    Media(type: MediaType.video, url: 'v5mrdehPOEE'),
-    Media(type: MediaType.video, url: 'QViR02CMU9Y'),
-  ];
-
-  void launchURL({String? url}) async {
-    if (url != null) {
-      Uri myUri = Uri.parse(url);
-      await launchUrl(
-        myUri,
-        mode: LaunchMode.externalApplication,
-      );
-    }
-  }
+  const Gallery({
+    Key? key,
+    this.gallery,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +19,15 @@ class Gallery extends StatelessWidget {
       child: SizedBox(
         height: Get.height,
         child: ListView.builder(
-          itemCount: mediaList.length,
+          itemCount: gallery != null ? gallery!.length : 0,
           itemBuilder: (BuildContext context, int index) {
-            if (mediaList[index].type == MediaType.photo) {
+            if (gallery?[index].mediaType == MediaType.photo) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
                   child: Image.network(
-                    mediaList[index].url,
+                    gallery![index].url!,
                     fit: BoxFit.cover,
                     loadingBuilder: (BuildContext context, Widget child,
                         ImageChunkEvent? loadingProgress) {
@@ -69,9 +50,9 @@ class Gallery extends StatelessWidget {
                   ),
                 ),
               );
-            } else if (mediaList[index].type == MediaType.video) {
+            } else if (gallery?[index].mediaType == MediaType.video) {
               String? videoId =
-                  YoutubePlayer.convertUrlToId(mediaList[index].url);
+                  YoutubePlayer.convertUrlToId(gallery![index].url!);
               if (videoId == null) {
                 return const Text('Erro ao carregar vídeo');
               }
@@ -100,12 +81,3 @@ class Gallery extends StatelessWidget {
     );
   }
 }
-
-class Media {
-  final String url;
-  final MediaType type;
-
-  Media({required this.url, required this.type});
-}
-
-enum MediaType { photo, video }

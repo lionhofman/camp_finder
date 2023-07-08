@@ -1,3 +1,4 @@
+import 'package:camp_finder/app/data/database/db.dart';
 import 'package:camp_finder/app/ui/modules/camping_register/gallery_item_dialog.dart';
 import 'package:camp_finder/app/ui/modules/camping_register/open_hours_dialog.dart';
 import 'package:flutter/material.dart';
@@ -437,7 +438,8 @@ class _CampingRegisterPageState extends State<CampingRegisterPage> {
             GeoFirePoint geoFirePoint = GeoFlutterFire()
                 .point(latitude: latitude!, longitude: longitude!);
             FirebaseFirestore firestore = FirebaseFirestore.instance;
-            var campingDocument = await firestore.collection('camps').doc();
+            var campingDocument =
+                await firestore.collection(DB.DB_CAMP_NAME).doc();
             DateTime now = DateTime.now();
             int timestamp = now.millisecondsSinceEpoch;
             campingDocument.set({
@@ -478,7 +480,7 @@ class _CampingRegisterPageState extends State<CampingRegisterPage> {
 
 Future<int> getNextCode() async {
   final counterRef =
-      FirebaseFirestore.instance.collection('counters').doc('camp_teste');
+      FirebaseFirestore.instance.collection('counters').doc(DB.DB_CAMP_NAME);
   final counterDoc = await counterRef.get();
   if (!counterDoc.exists) {
     // Se o documento do contador não existir, criamos com o valor inicial 1
