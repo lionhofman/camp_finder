@@ -47,17 +47,29 @@ class _CampingRegisterPageState extends State<CampingRegisterPage> {
 
   void validateAddInfo() {
     setState(() {
-      if (taxes.isNotEmpty) {
-        additionalInfo.add({'Taxas': taxes});
-      }
       if (additionalInfoItem.isNotEmpty) {
-        additionalInfo.add({'Informações Adicionais': additionalInfoItem});
+        additionalInfo.add({
+          'type': 'Informações Adicionais',
+          'info': additionalInfoItem,
+        });
       }
       if (restaurants.isNotEmpty) {
-        additionalInfo.add({'Restaurantes': restaurants});
+        additionalInfo.add({
+          'type': 'Restaurantes',
+          'info': restaurants,
+        });
       }
       if (otherServices.isNotEmpty) {
-        additionalInfo.add({'Outros Serviços': otherServices});
+        additionalInfo.add({
+          'type': 'Outros Serviços',
+          'info': otherServices,
+        });
+      }
+      if (taxes.isNotEmpty) {
+        additionalInfo.add({
+          'type': 'Taxas',
+          'info': taxes,
+        });
       }
     });
   }

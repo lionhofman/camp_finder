@@ -22,11 +22,13 @@ class ItemDetail extends GetView<ItemDetailController> {
           controller.campingDetail.value!.gallery!.isNotEmpty)
         const Tab(text: "Galeria", icon: Icon(Icons.photo_library)),
       const Tab(text: "Reviews", icon: FaIcon(FontAwesomeIcons.commentDots)),
-      const Tab(text: "Mais info", icon: Icon(Icons.info)),
+      if (controller.campingDetail.value!.additionalInfo != null &&
+          controller.campingDetail.value!.additionalInfo!.isNotEmpty)
+        const Tab(text: "Mais info", icon: Icon(Icons.info)),
     ];
     return Scaffold(
       body: DefaultTabController(
-        length: 4,
+        length: tabs.length,
         child: Builder(
           builder: (BuildContext context) {
             return NestedScrollView(
@@ -164,7 +166,12 @@ class ItemDetail extends GetView<ItemDetailController> {
                       controller.campingDetail.value!.gallery!.isNotEmpty)
                     Gallery(gallery: controller.campingDetail.value!.gallery),
                   ReviewPage(),
-                  const InfoPage(),
+                  if (controller.campingDetail.value!.additionalInfo != null &&
+                      controller
+                          .campingDetail.value!.additionalInfo!.isNotEmpty)
+                    InfoPage(
+                        listAdditioinalInfo:
+                            controller.campingDetail.value!.additionalInfo),
                 ],
               ),
             );

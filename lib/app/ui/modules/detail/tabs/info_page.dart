@@ -1,39 +1,43 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
+import 'package:camp_finder/app/domain/entities/additional_info.dart';
+import 'package:get/get.dart';
+
 class InfoPage extends StatelessWidget {
-  const InfoPage({Key? key}) : super(key: key);
+  final List<AdditionalInfo>? listAdditioinalInfo;
+
+  const InfoPage({
+    Key? key,
+    this.listAdditioinalInfo,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: const <Widget>[
-        ListTile(
-          title: Text('Taxas', style: TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(
-              'Adultos: \$20 por noite\nCrianças: \$10 por noite\nEstacionamento: \$5 por veículo'),
+    return Center(
+      child: SizedBox(
+        height: Get.height,
+        child: ListView.builder(
+          itemCount:
+              listAdditioinalInfo != null ? listAdditioinalInfo!.length : 0,
+          itemBuilder: (BuildContext context, int index) {
+            return Visibility(
+              visible: listAdditioinalInfo![index].type != null &&
+                  listAdditioinalInfo![index].type!.isNotEmpty,
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text(listAdditioinalInfo![index].type ?? "",
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text(listAdditioinalInfo![index].info ?? ""),
+                  ),
+                  const Divider(),
+                ],
+              ),
+            );
+          },
         ),
-        Divider(),
-        ListTile(
-          title: Text('Informações Adicionais',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(
-              'Check-in: 2pm\nCheck-out: 11am\nNão são permitidos animais'),
-        ),
-        Divider(),
-        ListTile(
-          title: Text('Restaurantes',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(
-              'Restaurante 1: Aberto das 8h às 22h\nRestaurante 2: Aberto das 6h às 18h'),
-        ),
-        Divider(),
-        ListTile(
-          title: Text('Outros Serviços',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(
-              'Wi-Fi: Disponível na área da recepção\nLenha: \$5 por carga'),
-        ),
-      ],
+      ),
     );
   }
 }
