@@ -32,9 +32,9 @@ class HomePage extends GetView<HomeController> {
                         ))
                   ];
                 },
-                body: CustomScrollView(
+                body: const CustomScrollView(
                   slivers: <Widget>[
-                    const SliverToBoxAdapter(
+                    SliverToBoxAdapter(
                       child: Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Text(
@@ -44,10 +44,10 @@ class HomePage extends GetView<HomeController> {
                         ),
                       ),
                     ),
-                    SliverToBoxAdapter(child: const TopServicesWidget()),
+                    SliverToBoxAdapter(child: TopServicesWidget()),
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -56,13 +56,14 @@ class HomePage extends GetView<HomeController> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
-                            TextButton(
-                              onPressed: () {
-                                // LSNearByScreen().launch(context);
-                              },
-                              child: Text('View All',
-                                  style: TextStyle(color: Colors.blue)),
-                            ),
+                            //TODO -> MVP ViewAll
+                            // TextButton(
+                            //   onPressed: () {
+                            //     // LSNearByScreen().launch(context);
+                            //   },
+                            //   child: Text('View All',
+                            //       style: TextStyle(color: Colors.blue)),
+                            // ),
                           ],
                         ),
                       ),
@@ -70,27 +71,28 @@ class HomePage extends GetView<HomeController> {
                     SliverToBoxAdapter(child: ShowcaseHighlightsWidget()),
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
+                            Text(
                               'Campings imperdíveis',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
-                            TextButton(
-                              onPressed: () {
-                                // LSOfferAllScreen().launch(context);
-                              },
-                              child: Text('View All',
-                                  style: TextStyle(color: Colors.blue)),
-                            ),
+                            //TODO -> MVP ViewAll
+                            // TextButton(
+                            //   onPressed: () {
+                            //     // LSOfferAllScreen().launch(context);
+                            //   },
+                            //   child: Text('View All',
+                            //       style: TextStyle(color: Colors.blue)),
+                            // ),
                           ],
                         ),
                       ),
                     ),
-                    SliverToBoxAdapter(child: const ShowcaseHighlightsWidget()),
+                    SliverToBoxAdapter(child: ShowcaseHighlightsWidget()),
                   ],
                 ),
               ),

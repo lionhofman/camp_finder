@@ -5,7 +5,8 @@ import 'package:camp_finder/app/ui/modules/detail/tabs/gallery.dart';
 import 'package:camp_finder/app/ui/modules/detail/tabs/info_page.dart';
 import 'package:camp_finder/app/ui/modules/detail/tabs/reviews_page.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+//TODO -> MVP Reviews
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -21,7 +22,8 @@ class ItemDetail extends GetView<ItemDetailController> {
       if (controller.campingDetail.value!.gallery != null &&
           controller.campingDetail.value!.gallery!.isNotEmpty)
         const Tab(text: "Galeria", icon: Icon(Icons.photo_library)),
-      const Tab(text: "Reviews", icon: FaIcon(FontAwesomeIcons.commentDots)),
+      //TODO -> MVP Reviews
+      // const Tab(text: "Reviews", icon: FaIcon(FontAwesomeIcons.commentDots)),
       if (controller.campingDetail.value!.additionalInfo != null &&
           controller.campingDetail.value!.additionalInfo!.isNotEmpty)
         const Tab(text: "Mais info", icon: Icon(Icons.info)),
@@ -75,12 +77,11 @@ class ItemDetail extends GetView<ItemDetailController> {
                                     height: 200,
                                   ),
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           Text(
                                               controller
@@ -94,48 +95,50 @@ class ItemDetail extends GetView<ItemDetailController> {
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 18)),
-                                          Row(
-                                            children: [
-                                              RatingBarWidget(
-                                                rating: 2.5,
-                                                size: 20,
-                                                disable: true,
-                                                onRatingChanged: (aRating) {},
-                                              ),
-                                              const SizedBox(width: 4),
-                                              Text('(90 Reviews)',
-                                                  style: secondaryTextStyle(
-                                                      color: white)),
-                                            ],
-                                          ),
+                                          //TODO -> MVP Reviews
+                                          // Row(
+                                          //   children: [
+                                          //     RatingBarWidget(
+                                          //       rating: 2.5,
+                                          //       size: 20,
+                                          //       disable: true,
+                                          //       onRatingChanged: (aRating) {},
+                                          //     ),
+                                          //     const SizedBox(width: 4),
+                                          //     Text('(90 Reviews)',
+                                          //         style: secondaryTextStyle(
+                                          //             color: white)),
+                                          //   ],
+                                          // ),
                                         ],
                                       ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Text('0.2 Km Away',
-                                              style: secondaryTextStyle(
-                                                  color: white)),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 6),
-                                            decoration:
-                                                boxDecorationWithRoundedCorners(
-                                                    backgroundColor:
-                                                        Colors.green,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                            child: Text('Open'.toUpperCase(),
-                                                style: primaryTextStyle(
-                                                    color: white)),
-                                          ),
-                                        ],
-                                      ),
+                                      //TODO -> MVP 02 km away e Horario de funcionamento
+                                      // Column(
+                                      //   crossAxisAlignment:
+                                      //       CrossAxisAlignment.end,
+                                      //   children: [
+                                      //     Text('0.2 Km Away',
+                                      //         style: secondaryTextStyle(
+                                      //             color: white)),
+                                      //     const SizedBox(
+                                      //       height: 8,
+                                      //     ),
+                                      //     Container(
+                                      //       padding: const EdgeInsets.symmetric(
+                                      //           horizontal: 8, vertical: 6),
+                                      //       decoration:
+                                      //           boxDecorationWithRoundedCorners(
+                                      //               backgroundColor:
+                                      //                   Colors.green,
+                                      //               borderRadius:
+                                      //                   BorderRadius.circular(
+                                      //                       20)),
+                                      //       child: Text('Open'.toUpperCase(),
+                                      //           style: primaryTextStyle(
+                                      //               color: white)),
+                                      //     ),
+                                      //   ],
+                                      // ),
                                     ],
                                   ),
                                 ],
@@ -165,7 +168,8 @@ class ItemDetail extends GetView<ItemDetailController> {
                   if (controller.campingDetail.value!.gallery != null &&
                       controller.campingDetail.value!.gallery!.isNotEmpty)
                     Gallery(gallery: controller.campingDetail.value!.gallery),
-                  ReviewPage(),
+                  //TODO -> MVP Reviews
+                  // ReviewPage(),
                   if (controller.campingDetail.value!.additionalInfo != null &&
                       controller
                           .campingDetail.value!.additionalInfo!.isNotEmpty)

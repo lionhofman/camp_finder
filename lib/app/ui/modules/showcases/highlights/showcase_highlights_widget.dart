@@ -30,7 +30,7 @@ class ShowcaseHighlightsWidget extends GetView<ShowcaseHighlightsController> {
                   decoration: BoxDecoration(
                     color: context.cardColor,
                     borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Colors.black26,
                         offset: Offset(0, 2),
@@ -68,16 +68,17 @@ class ShowcaseHighlightsWidget extends GetView<ShowcaseHighlightsController> {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.star,
-                                            color: Colors.yellowAccent),
-                                        Text(
-                                          "rating".validate(),
-                                          style: secondaryTextStyle(),
-                                        ),
-                                      ],
-                                    ),
+                                    //TODO -> MVP Reviews
+                                    // Row(
+                                    //   children: [
+                                    //     Icon(Icons.star,
+                                    //         color: Colors.yellowAccent),
+                                    //     Text(
+                                    //       "rating".validate(),
+                                    //       style: secondaryTextStyle(),
+                                    //     ),
+                                    //   ],
+                                    // ),
                                   ],
                                 ),
                                 SizedBox(height: 4),
