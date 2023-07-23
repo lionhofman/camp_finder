@@ -26,9 +26,9 @@ class HomePage extends GetView<HomeController> {
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     Obx(() => AppBarHeader(
-                          innerBoxIsScrolled: innerBoxIsScrolled,
                           localization: controller.userLocation,
                           authStore: controller.authStore,
+                          useSliverAppBar: true,
                         ))
                   ];
                 },

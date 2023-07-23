@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 
 import 'package:camp_finder/app/data/database/db.dart';
 import 'package:camp_finder/app/ui/modules/camping/camping_details.dart';
+import 'package:camp_finder/app/ui/modules/geolocalization/controller/geolocalization_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +20,9 @@ class CampingController extends GetxController {
   final latitude = 0.0.obs;
   final longitude = 0.0.obs;
   final raio = 0.0.obs;
+  RxString _userLocalization = "".obs;
+
+  String get userLocation => _userLocalization.value;
 
   StreamSubscription<Position>? positionStream;
   final LatLng _position = const LatLng(-26.877199, -49.099221);
@@ -126,6 +130,17 @@ class CampingController extends GetxController {
   void onClose() {
     positionStream!.cancel();
     super.onClose();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    asyncInit();
+  }
+
+  Future<void> asyncInit() async {
+    _userLocalization.value =
+        await GeolocalizationController.getCurrentLocation();
   }
 
   Future<Position> _posicaoAtual() async {
