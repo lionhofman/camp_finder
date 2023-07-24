@@ -30,20 +30,27 @@ class BottomBar extends GetView<RootController> {
                     controller.changePage(PageConstants.BOTTOM_BAR_INDEX_HOME);
                   },
                 ),
-                IconButton(
-                  icon: const Icon(Icons.list),
-                  onPressed: () {
-                    controller.changePage(
-                        PageConstants.BOTTOM_BAR_INDEX_REGISTER_CAMPING);
-                  },
-                ),
+                Obx(() {
+                  return Visibility(
+                    visible: controller.authStore.isLoggedIn.value &&
+                        controller.authStore.firstName ==
+                            RootController.LION_NAME,
+                    child: IconButton(
+                      icon: const Icon(Icons.list),
+                      onPressed: () {
+                        controller.changePage(
+                            PageConstants.BOTTOM_BAR_INDEX_REGISTER_CAMPING);
+                      },
+                    ),
+                  );
+                }),
                 const SizedBox(
                   width: 60,
                 ),
-                IconButton(
-                  icon: const Icon(Icons.search_outlined),
-                  onPressed: () {},
-                ),
+                // IconButton(
+                //   icon: const Icon(Icons.search_outlined),
+                //   onPressed: () {},
+                // ),
                 ValueListenableBuilder(
                   valueListenable: controller.isLoadingLogout,
                   builder: (BuildContext context, bool isLoading, _) {

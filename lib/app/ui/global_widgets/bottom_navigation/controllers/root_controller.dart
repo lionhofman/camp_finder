@@ -21,6 +21,7 @@ class RootController extends GetxController {
   final RxInt _currentIndex = 0.obs;
   RxBool _isLoggedIn = false.obs;
   LogoutUseCase logoutUseCase;
+  static const String LION_NAME = 'Lion';
 
   RootController(
     this._authStore,
