@@ -142,8 +142,7 @@ class _CampingRegisterPageState extends State<CampingRegisterPage> {
                   },
                 ),
                 TextFormField(
-                  inputFormatters: [urlFormatter],
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Link da Imagem',
                   ),
                   validator: (value) {
@@ -274,7 +273,6 @@ class _CampingRegisterPageState extends State<CampingRegisterPage> {
                   },
                 ),
                 TextFormField(
-                  inputFormatters: [urlFormatter],
                   decoration: InputDecoration(
                     labelText: 'Site',
                   ),
@@ -291,7 +289,6 @@ class _CampingRegisterPageState extends State<CampingRegisterPage> {
                   },
                 ),
                 TextFormField(
-                  inputFormatters: [urlFormatter],
                   decoration: InputDecoration(
                     labelText: 'Instagram',
                   ),
