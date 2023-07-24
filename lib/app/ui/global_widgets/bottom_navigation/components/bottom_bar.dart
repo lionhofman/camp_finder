@@ -18,65 +18,70 @@ class BottomBar extends GetView<RootController> {
       child: IconTheme(
           data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
           child: Padding(
-            padding: const EdgeInsets.only(right: 6),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.home,
-                  ),
-                  onPressed: () {
-                    controller.changePage(PageConstants.BOTTOM_BAR_INDEX_HOME);
-                  },
-                ),
-                Obx(() {
-                  return Visibility(
-                    visible: controller.authStore.isLoggedIn.value &&
-                        controller.authStore.firstName ==
-                            RootController.LION_NAME,
-                    child: IconButton(
-                      icon: const Icon(Icons.list),
+              padding: const EdgeInsets.only(right: 6),
+              child: Obx(
+                () {
+                  List<Widget> buttons = [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.home,
+                      ),
                       onPressed: () {
-                        controller.changePage(
-                            PageConstants.BOTTOM_BAR_INDEX_REGISTER_CAMPING);
+                        controller
+                            .changePage(PageConstants.BOTTOM_BAR_INDEX_HOME);
                       },
                     ),
+                    IconButton(
+                      icon: const Icon(Icons.location_on_outlined),
+                      onPressed: () {
+                        controller
+                            .changePage(PageConstants.BOTTOM_BAR_INDEX_FINDER);
+                      },
+                    ),
+                    ValueListenableBuilder(
+                      valueListenable: controller.isLoadingLogout,
+                      builder: (BuildContext context, bool isLoading, _) {
+                        return isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Obx(() => IconButton(
+                                  icon: Icon(controller.isLoggedIn.value
+                                      ? Icons.logout
+                                      : Icons.person),
+                                  onPressed: () {
+                                    if (controller.isLoggedIn.value) {
+                                      controller.logout();
+                                    } else {
+                                      controller.changePage(
+                                          PageConstants.BOTTOM_BAR_INDEX_LOGIN);
+                                    }
+                                  },
+                                ));
+                      },
+                    ),
+                  ];
+                  //Essas condições foram feitas para aparecer o botão de cadastro
+                  if (controller.authStore.isLoggedIn.value &&
+                      controller.authStore.firstName ==
+                          RootController.LION_NAME) {
+                    buttons.insert(
+                        1,
+                        IconButton(
+                          icon: const Icon(Icons.list),
+                          onPressed: () {
+                            controller.changePage(PageConstants
+                                .BOTTOM_BAR_INDEX_REGISTER_CAMPING);
+                          },
+                        ));
+                  }
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: buttons,
                   );
-                }),
-                const SizedBox(
-                  width: 60,
-                ),
-                // IconButton(
-                //   icon: const Icon(Icons.search_outlined),
-                //   onPressed: () {},
-                // ),
-                ValueListenableBuilder(
-                  valueListenable: controller.isLoadingLogout,
-                  builder: (BuildContext context, bool isLoading, _) {
-                    return isLoading
-                        ? const CircularProgressIndicator(
-                            color: Colors
-                                .white, // Define a cor do CircularProgressIndicator para branco.
-                          )
-                        : Obx(() => IconButton(
-                              icon: Icon(controller.isLoggedIn.value
-                                  ? Icons.logout
-                                  : Icons.person),
-                              onPressed: () {
-                                if (controller.isLoggedIn.value) {
-                                  controller.logout();
-                                } else {
-                                  controller.changePage(
-                                      PageConstants.BOTTOM_BAR_INDEX_LOGIN);
-                                }
-                              },
-                            ));
-                  },
-                ),
-              ],
-            ),
-          )),
+                },
+              ))),
     );
   }
 }

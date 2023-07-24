@@ -22,14 +22,14 @@ class RootPage extends GetView<RootController> {
             ),
           ),
           extendBody: true,
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              controller.changePage(PageConstants.BOTTOM_BAR_INDEX_FINDER);
-            },
-            child: const Icon(Icons.location_on_outlined),
-          ),
+          // floatingActionButtonLocation:
+          //     FloatingActionButtonLocation.centerDocked,
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {
+          //     controller.changePage(PageConstants.BOTTOM_BAR_INDEX_FINDER);
+          //   },
+          //   child: const Icon(Icons.location_on_outlined),
+          // ),
           bottomNavigationBar: const BottomBar(),
         ));
   }
