@@ -15,6 +15,7 @@ class CampingBinding implements Bindings {
     Get.lazyPut(() => GetAllCampingsUseCase(Get.find<CampingRepository>()));
     Get.lazyPut(
         () => GetCampingsLimitToLastUseCase(Get.find<CampingRepository>()));
-    Get.lazyPut<CampingController>(() => CampingController());
+    Get.lazyPut<CampingController>(
+        () => CampingController(Get.find<GetAllCampingsUseCase>()));
   }
 }

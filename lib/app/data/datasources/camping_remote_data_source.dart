@@ -28,11 +28,10 @@ class CampingRemoteDataSourceImpl implements CampingRemoteDataSource {
   Future<List<Camping?>> handleAllCampingRequest() async {
     List<Camping?> campingsList = [];
 
-    await collection.get().then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) async {
-        campingsList.add(await getCampingResponse(doc));
-      });
-    });
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await collection.get();
+    for (var doc in querySnapshot.docs) {
+      campingsList.add(await getCampingResponse(doc));
+    }
     return campingsList;
   }
 

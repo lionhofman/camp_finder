@@ -1,22 +1,29 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
+import 'dart:math' as Math;
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:math' as Math;
 import 'dart:ui' as ui;
 
-import 'package:camp_finder/app/data/database/db.dart';
-import 'package:camp_finder/app/ui/modules/camping/camping_details.dart';
-import 'package:camp_finder/app/ui/modules/geolocalization/controller/geolocalization_controller.dart';
+import 'package:camp_finder/app/domain/entities/camping.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geoflutterfire2/geoflutterfire2.dart';
-
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'package:camp_finder/app/domain/usecases/campings/get_all_campings_use_case.dart';
+import 'package:camp_finder/app/ui/modules/camping/camping_details.dart';
+import 'package:camp_finder/app/ui/modules/geolocalization/controller/geolocalization_controller.dart';
+
 class CampingController extends GetxController {
+  GetAllCampingsUseCase getAllCampingsUseCase;
+
+  List<Camping?> _listCamps = <Camping>[].obs;
+
+  List<Camping?> get listCamps => _listCamps;
   final latitude = 0.0.obs;
   final longitude = 0.0.obs;
   final raio = 0.0.obs;
@@ -27,6 +34,9 @@ class CampingController extends GetxController {
   StreamSubscription<Position>? positionStream;
   final LatLng _position = const LatLng(-26.877199, -49.099221);
   GoogleMapController? _mapsController;
+  CampingController(
+    this.getAllCampingsUseCase,
+  );
   final markers = Set<Marker>();
 
   static CampingController get to => Get.find<CampingController>();
@@ -46,34 +56,35 @@ class CampingController extends GetxController {
         .asUint8List();
   }
 
-  filtrarCampings() {
-    final geo = GeoFlutterFire();
-    final db = DB.get();
+  // filtrarCampings() {
+  //   final geo = GeoFlutterFire();
+  //   final db = DB.get();
 
-    GeoFirePoint center = geo.point(
-      latitude: latitude.value,
-      longitude: longitude.value,
-    );
+  //   GeoFirePoint center = geo.point(
+  //     latitude: latitude.value,
+  //     longitude: longitude.value,
+  //   );
 
-    Query<Map<String, dynamic>> ref = db.collection('camping');
+  //   Query<Map<String, dynamic>> ref = db.collection(DB.DB_CAMP_NAME);
 
-    String field = 'position';
+  //   String field = 'position';
 
-    Stream<List<DocumentSnapshot>> stream = geo
-        .collection(collectionRef: ref)
-        .within(center: center, radius: raio.value, field: field);
+  //   Stream<List<DocumentSnapshot>> stream = geo
+  //       .collection(collectionRef: ref)
+  //       .within(center: center, radius: raio.value, field: field);
 
-    stream.listen((List<DocumentSnapshot<Object?>> campings) {
-      markers.clear();
-      campings.forEach((camping) {
-        addMarker(camping);
-      });
-      double zoomLevel = _calcularZoom();
-      _mapsController!.animateCamera(CameraUpdate.zoomTo(zoomLevel));
-      update();
-      Get.back();
-    });
-  }
+  //   stream.listen((List<DocumentSnapshot<Object?>> campings) {
+  //     markers.clear();
+  //     campings.forEach((camping) {
+  //       Camping? newCamping = camping.data();
+  //       addMarker(newCamping);
+  //     });
+  //     double zoomLevel = _calcularZoom();
+  //     _mapsController!.animateCamera(CameraUpdate.zoomTo(zoomLevel));
+  //     update();
+  //     Get.back();
+  //   });
+  // }
 
   onMapCreated(GoogleMapController gmc) async {
     _mapsController = gmc;
@@ -85,25 +96,36 @@ class CampingController extends GetxController {
     // _mapsController!.setMapStyle(style);
   }
 
-  loadCampings() async {
-    FirebaseFirestore db = DB.get();
-    final campings = await db.collection('camping').get();
+  Future<void> getAllCamps() async {
+    Either<Exception, List<Camping?>> camps =
+        await getAllCampingsUseCase.call();
 
-    campings.docs.forEach((camping) => addMarker(camping));
+    camps.fold((l) {
+      print("Failure in the query to home showCase");
+    }, (data) {
+      _listCamps.clear();
+      _listCamps = data.obs;
+      _listCamps.forEach((camping) => addMarker(camping));
+    });
   }
 
-  addMarker(camping) async {
-    GeoPoint point = camping.get('position.geopoint');
+  loadCampings() async {
+    //FirebaseFirestore db = DB.get();
+    //final campings = await db.collection(DB.DB_CAMP_NAME).get();
+    getAllCamps();
+  }
+
+  addMarker(Camping? camping) async {
+    GeoPoint point = camping!.position['geopoint'];
     final Uint8List icon =
         await getBytesFromAsset('assets/png/icon_map_location.png', 110);
-
     markers.add(
       Marker(
-        markerId: MarkerId(camping.id),
+        markerId: MarkerId(camping.title),
         position: LatLng(point.latitude, point.longitude),
-        infoWindow: InfoWindow(title: camping.get('name')),
+        infoWindow: InfoWindow(title: camping.nameCamping),
         icon: BitmapDescriptor.fromBytes(icon),
-        onTap: () => showDetails(camping.data()),
+        onTap: () => showDetails(camping),
       ),
     );
     update();
@@ -112,8 +134,7 @@ class CampingController extends GetxController {
   showDetails(camping) {
     Get.bottomSheet(
       CampingDetails(
-        nome: camping['name'],
-        imagem: camping['image'],
+        camping: camping,
       ),
       barrierColor: Colors.transparent,
     );
