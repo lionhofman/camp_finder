@@ -51,7 +51,7 @@ class AboutUs extends GetView<ItemDetailController> {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            campDetails!.address,
+                            campDetails!.address.capitalize!,
                             style: const TextStyle(
                                 color: appColorPrimary,
                                 decoration: TextDecoration.underline),
@@ -67,7 +67,7 @@ class AboutUs extends GetView<ItemDetailController> {
                           Expanded(
                             child: Text(
                               controller.distanceBetween != null
-                                  ? "Está à aproximadamente ${controller.distanceBetween}"
+                                  ? "Está à aprox. ${controller.distanceBetween}"
                                   : "",
                               style: const TextStyle(color: appColorPrimary),
                             ),
