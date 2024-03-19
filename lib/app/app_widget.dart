@@ -15,7 +15,7 @@ class AppWidget extends StatelessWidget {
     return GetMaterialApp(
       // The two lines bellow are for the responsive
       title: "Camp Finder",
-      initialRoute: AppRoutes.BOTTOM_NAVIGATION,
+      initialRoute: AppRoutes.SPLASH,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primarySwatch: Colors.blue,

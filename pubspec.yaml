@@ -59,6 +59,8 @@ dependencies:
   # debounce
   easy_debounce: ^2.0.1
 
+  flutter_spinkit: ^5.2.0
+
   ##new layouts dependences
   nb_utils: ^5.0.8
   #IMAGES

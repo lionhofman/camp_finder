@@ -11,6 +11,8 @@ import 'package:camp_finder/app/ui/modules/login/login_binding.dart';
 import 'package:camp_finder/app/ui/modules/login/login_page.dart';
 import 'package:camp_finder/app/ui/modules/register_new_customer/register_new_customer_binding.dart';
 import 'package:camp_finder/app/ui/modules/register_new_customer/register_new_customer_page.dart';
+import 'package:camp_finder/app/ui/modules/splash/splash_binding.dart';
+import 'package:camp_finder/app/ui/modules/splash/splash_page.dart';
 import 'package:camp_finder/app/ui/modules/tips/camping/camping_tips_binding.dart';
 import 'package:camp_finder/app/ui/modules/tips/camping/camping_tips_page.dart';
 import 'package:get/get.dart';
@@ -25,6 +27,11 @@ class AppPages {
       page: () => HomePage(),
       binding: HomeBinding(),
       transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.SPLASH,
+      page: () => SplashPage(),
+      binding: SplashBinding(),
     ),
     GetPage(
       name: AppRoutes.BOTTOM_NAVIGATION,
