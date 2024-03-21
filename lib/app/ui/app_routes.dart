@@ -10,4 +10,5 @@ class AppRoutes {
   static const String CAMPING_TIPS_PAGE = '/camping-tips-page';
   static const String DETAILS_PAGE = '/details-page';
   static const String SPLASH = '/splash';
+  static const String FAVORITE_PAGE = '/favorite-page';
 }

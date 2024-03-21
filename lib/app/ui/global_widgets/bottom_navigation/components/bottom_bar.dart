@@ -14,7 +14,7 @@ class BottomBar extends GetView<RootController> {
   Widget _buildBottom(BuildContext context) {
     return BottomAppBar(
       shape: const CircularNotchedRectangle(),
-      color: Theme.of(context).colorScheme.primary,
+      color: Colors.blue,
       child: IconTheme(
           data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
           child: Padding(

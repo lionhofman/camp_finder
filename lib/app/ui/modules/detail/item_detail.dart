@@ -3,7 +3,7 @@ import 'package:camp_finder/app/ui/modules/detail/controller/item_detail_control
 import 'package:camp_finder/app/ui/modules/detail/tabs/about_us.dart';
 import 'package:camp_finder/app/ui/modules/detail/tabs/gallery.dart';
 import 'package:camp_finder/app/ui/modules/detail/tabs/info_page.dart';
-import 'package:camp_finder/app/ui/modules/detail/tabs/reviews_page.dart';
+
 import 'package:flutter/material.dart';
 //TODO -> MVP Reviews
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';

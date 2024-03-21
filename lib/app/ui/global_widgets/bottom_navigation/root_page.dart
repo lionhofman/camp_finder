@@ -1,5 +1,5 @@
 import 'package:camp_finder/app/core/constants/colors.dart';
-import 'package:camp_finder/app/core/constants/page_constants.dart';
+
 import 'package:camp_finder/app/ui/global_widgets/bottom_navigation/components/bottom_bar.dart';
 import 'package:camp_finder/app/ui/global_widgets/bottom_navigation/controllers/root_controller.dart';
 import 'package:flutter/material.dart';
