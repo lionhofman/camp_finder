@@ -59,6 +59,7 @@ class LoginRepositoryImpl implements LoginRepository {
   Future<Either<Failure, void>> signOut() async {
     try {
       await _loginRemoteDataSource.signOut();
+      _authStore.clearCustomer();
       await GoogleSignIn().disconnect();
       if (FirebaseAuth.instance.currentUser != null) {
         if (FirebaseAuth.instance.currentUser != null) {
@@ -66,8 +67,6 @@ class LoginRepositoryImpl implements LoginRepository {
             'Usuário não foi deslogado do firebase corretamente',
           );
         }
-      } else {
-        _authStore.clearCustomer();
       }
       return Right(Void);
     } catch (e) {
